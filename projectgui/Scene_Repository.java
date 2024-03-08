@@ -36,12 +36,38 @@ public class Scene_Repository extends Application{
         loginPane.addRow(0, userNameLabel, userField);
         loginPane.addRow(1, passwordLabel, passField);
         loginPane.addRow(4, loginButton, registerButton);
-
-        Scene loginScene = new Scene(loginPane);
+        Scene loginScene = new Scene(loginPane, 400, 400);
 
 
         GridPane registerPane = new GridPane();
-        Scene registerScene = new Scene(registerPane);
+        registerPane.setAlignment(Pos.CENTER);
+        registerPane.setHgap(10);
+        registerPane.setVgap(10);
+        registerPane.setPadding(new Insets(25, 25, 25, 25));
+        //labels
+        Label newFirstName = new Label("First Name:");
+        Label newLastName = new Label("Last Name:");
+        Label newUserNameLabel = new Label("Username:");
+        Label newPasswordLabel = new Label("Enter a new password:");
+        Label enterPassAgainLabel = new Label("Enter the password again:");
+
+        //textfields
+        TextField newFirstField = new TextField();
+        TextField newLastField = new TextField();
+        TextField newPassField = new TextField();
+        TextField passAgainField = new TextField();
+        TextField newUserName = new TextField();
+
+        Button registerUser = new Button("Register");
+
+        registerPane.addRow(0, newFirstName, newFirstField);
+        registerPane.addRow(1, newLastName, newLastField);
+        registerPane.addRow(2, newUserNameLabel, newUserName);
+        registerPane.addRow(3, newPasswordLabel, newPassField);
+        registerPane.addRow(4, enterPassAgainLabel, passAgainField);
+        registerPane.addRow(5, registerUser);
+        Scene registerScene = new Scene(registerPane, 400, 400);
+
 
 
 
