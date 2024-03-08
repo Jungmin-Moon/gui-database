@@ -9,5 +9,9 @@ import javafx.scene.paint.*;
 
 //will be using border pane for the various scenes to organize them better
 
-public class Scene_Repository {
+public class Scene_Repository extends Application{
+    @Override
+    public void start(Stage primaryStage) {
+
+    }
 }
