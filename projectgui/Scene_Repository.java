@@ -19,20 +19,19 @@ public class Scene_Repository extends Application{
         loginPane.setHgap(10);
         loginPane.setVgap(10);
         loginPane.setPadding(new Insets(25, 25, 25, 25));
+
+        //labels
         Label userNameLabel = new Label("Username:");
         Label passwordLabel = new Label("Password:");
+        //text fields
         TextField userField = new TextField();
         TextField passField = new TextField();
+        //buttons
         Button loginButton = new Button("Login");
         Button registerButton = new Button("Register");
-        /*
-        loginPane.add(userNameLabel, 0, 0);
-        loginPane.add(userField, 1, 0);
-        loginPane.add(passwordLabel, 0, 1);
-        loginPane.add(passField, 1, 1);
-        loginPane.add(loginButton, 3, 2);
 
-        //loginPane.add(registerButton, 3,6); */
+
+
         loginPane.addRow(0, userNameLabel, userField);
         loginPane.addRow(1, passwordLabel, passField);
         loginPane.addRow(4, loginButton, registerButton);
@@ -51,7 +50,7 @@ public class Scene_Repository extends Application{
         Label newPasswordLabel = new Label("Enter a new password:");
         Label enterPassAgainLabel = new Label("Enter the password again:");
 
-        //textfields
+        //text fields
         TextField newFirstField = new TextField();
         TextField newLastField = new TextField();
         TextField newPassField = new TextField();
@@ -79,10 +78,11 @@ public class Scene_Repository extends Application{
         VBox updateInfo = new VBox();
         Scene updateInfoScene = new Scene(updateInfo);
 
-
+        registerButton.setOnAction(e -> primaryStage.setScene(registerScene));
 
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Employee Database");
         primaryStage.show();
     }
+    
 }
