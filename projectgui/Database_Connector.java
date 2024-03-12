@@ -6,7 +6,7 @@ import java.sql.*;
 public class Database_Connector {
     Connection connection = null;
 
-    private void establishConnection () {
+    protected Connection establishConnection () {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(
@@ -15,12 +15,25 @@ public class Database_Connector {
 
             Statement statement = connection.createStatement();
 
-
-            connection.close();
+            //connection.close();
         }
         catch (Exception exception) {
             System.out.println(exception);
-        }
+        } /*
+        finally {
+            if(connection != null)
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+        } */
+
+        return connection;
+    }
+
+    protected void closeConnection() throws SQLException {
+        connection.close();
     }
 
 

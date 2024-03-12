@@ -3,15 +3,27 @@ package projectgui;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
+import javafx.scene.shape.*;
+import java.sql.*;
 
 //will be using border pane for the various scenes to organize them better
 
 public class Scene_Repository extends Application{
+    LoginChecker loginCheck = new LoginChecker();
+    User user = new User();
+
+
+    private void setTokens(String[] values) {
+        user.setEmpID(Integer.parseInt(values[0]));
+        user.setName(values[1] + " " + values[2]);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         GridPane loginPane = new GridPane();
@@ -29,12 +41,14 @@ public class Scene_Repository extends Application{
         //buttons
         Button loginButton = new Button("Login");
         Button registerButton = new Button("Register");
+        Text loginText = new Text("");
 
 
 
         loginPane.addRow(0, userNameLabel, userField);
         loginPane.addRow(1, passwordLabel, passField);
         loginPane.addRow(4, loginButton, registerButton);
+        loginPane.addRow(5, loginText);
         Scene loginScene = new Scene(loginPane, 400, 400);
 
 
@@ -68,21 +82,51 @@ public class Scene_Repository extends Application{
         Scene registerScene = new Scene(registerPane, 400, 400);
 
 
-
-
-        BorderPane afterLogin = new BorderPane();
-        Scene afterLoginScene = new Scene(afterLogin);
-
-
-
         VBox updateInfo = new VBox();
         Scene updateInfoScene = new Scene(updateInfo);
 
         registerButton.setOnAction(e -> primaryStage.setScene(registerScene));
+        loginButton.setOnAction(e -> {
+            String uName = userField.getText();
+            String uPass = passField.getText();
+            if (validateInformation(uName, uPass)) {
+                String[] persistCheck = loginCheck.getInformation(uName);
+                setTokens(persistCheck);
+                primaryStage.setScene(afterLoginScene());
+
+            } else {
+                loginText.setText("Does not exist in databasse.");
+            }
+        });
+        //registerUser.setOnAction(e -> );
 
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Employee Database");
         primaryStage.show();
+
     }
+
+
+    private boolean validateInformation(String userName, String userPassword) {
+        boolean isValid = loginCheck.checkLoginInformation(userName, userPassword);
+        if (isValid) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private Scene afterLoginScene() {
+        BorderPane afterLogin = new BorderPane();
+        Scene afterLoginScene = new Scene(afterLogin, 400, 400);
+        Text loggedIn = new Text();
+        loggedIn.setText("Employee ID: " + user.getEmpID() + "\n" +
+                "Hello, " + user.getName());
+        afterLogin.setTop(loggedIn);
+
+
+        return afterLoginScene;
+    }
+
     
 }
