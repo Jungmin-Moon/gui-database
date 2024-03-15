@@ -7,16 +7,16 @@ import java.sql.*;
 
 public class LoginChecker {
 
-    Database_Connector dbConnect = new Database_Connector();
-    Connection newConnect = dbConnect.establishConnection();
+    //Database_Connector dbConnect = new Database_Connector();
+    //Connection newConnect = dbConnect.establishConnection();
 
-    protected boolean checkLoginInformation(String userName, String userPassword) {
+    protected boolean checkLoginInformation(String userName, String userPassword, Connection conn) {
         boolean validInformation = false;
 
         try {
             String query = "Select * from login_information where " +
                     "UserName = '" + userName + "' and userpassword = '" + userPassword + "';";
-            Statement stmt = newConnect.createStatement();
+            Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
             if (result.next()) {
                 validInformation = true;
@@ -31,13 +31,13 @@ public class LoginChecker {
     }
 
 
-    protected String[] getInformation (String userName) {
+    protected String[] getInformation (String userName, Connection conn) {
         String[] results = new String[3];
 
         try {
             String query = "Select employee_id, firstName, lastName from login_information where " +
                     "username = '" + userName + "';";
-            Statement getUserInfo = newConnect.createStatement();
+            Statement getUserInfo = conn.createStatement();
 
             ResultSet resultSet = getUserInfo.executeQuery(query);
             while (resultSet.next()) {

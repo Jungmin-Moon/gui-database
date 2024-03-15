@@ -18,11 +18,11 @@ public class Scene_Repository extends Application{
     LoginChecker loginCheck = new LoginChecker();
     User user = new User();
 
+    Database_Connector dbConnect = new Database_Connector();
 
-    private void setTokens(String[] values) {
-        user.setEmpID(Integer.parseInt(values[0]));
-        user.setName(values[1] + " " + values[2]);
-    }
+    Connection connection = dbConnect.establishConnection();
+
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -37,7 +37,7 @@ public class Scene_Repository extends Application{
         Label passwordLabel = new Label("Password:");
         //text fields
         TextField userField = new TextField();
-        TextField passField = new TextField();
+        PasswordField passField = new PasswordField();
         //buttons
         Button loginButton = new Button("Login");
         Button registerButton = new Button("Register");
@@ -85,12 +85,13 @@ public class Scene_Repository extends Application{
         VBox updateInfo = new VBox();
         Scene updateInfoScene = new Scene(updateInfo);
 
+        //event handling
         registerButton.setOnAction(e -> primaryStage.setScene(registerScene));
         loginButton.setOnAction(e -> {
             String uName = userField.getText();
             String uPass = passField.getText();
-            if (validateInformation(uName, uPass)) {
-                String[] persistCheck = loginCheck.getInformation(uName);
+            if (validateInformation(uName, uPass, connection)) {
+                String[] persistCheck = loginCheck.getInformation(uName, connection);
                 setTokens(persistCheck);
                 primaryStage.setScene(afterLoginScene());
 
@@ -107,8 +108,8 @@ public class Scene_Repository extends Application{
     }
 
 
-    private boolean validateInformation(String userName, String userPassword) {
-        boolean isValid = loginCheck.checkLoginInformation(userName, userPassword);
+    private boolean validateInformation(String userName, String userPassword, Connection connection) {
+        boolean isValid = loginCheck.checkLoginInformation(userName, userPassword, connection);
         if (isValid) {
             return true;
         } else {
@@ -126,6 +127,11 @@ public class Scene_Repository extends Application{
 
 
         return afterLoginScene;
+    }
+
+    private void setTokens(String[] values) {
+        user.setEmpID(Integer.parseInt(values[0]));
+        user.setName(values[1] + " " + values[2]);
     }
 
     
