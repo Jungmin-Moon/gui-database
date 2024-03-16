@@ -16,10 +16,9 @@ import java.sql.*;
 
 public class Scene_Repository extends Application{
     LoginChecker loginCheck = new LoginChecker();
+    RegistrationChecker registerCheck = new RegistrationChecker();
     User user = new User();
-
     Database_Connector dbConnect = new Database_Connector();
-
     Connection connection = dbConnect.establishConnection();
 
 
@@ -71,6 +70,8 @@ public class Scene_Repository extends Application{
         TextField passAgainField = new TextField();
         TextField newUserName = new TextField();
 
+        Text status = new Text();
+
         Button registerUser = new Button("Register");
 
         registerPane.addRow(0, newFirstName, newFirstField);
@@ -79,6 +80,7 @@ public class Scene_Repository extends Application{
         registerPane.addRow(3, newPasswordLabel, newPassField);
         registerPane.addRow(4, enterPassAgainLabel, passAgainField);
         registerPane.addRow(5, registerUser);
+        registerPane.addRow(6, status);
         Scene registerScene = new Scene(registerPane, 400, 400);
 
 
@@ -99,7 +101,31 @@ public class Scene_Repository extends Application{
                 loginText.setText("Does not exist in databasse.");
             }
         });
-        //registerUser.setOnAction(e -> );
+
+        registerUser.setOnAction(e -> {
+            String pass1 = newPassField.getText();
+            String pass2 = passAgainField.getText();
+            String newUName = newUserName.getText();
+
+            if (!registerCheck.checkUserExists(newUName, connection)) {
+                if (pass1.equals(pass2)) {
+                    String newFName = newFirstField.getText();
+                    String newLName = newLastField.getText();
+                    boolean registered = registerCheck.registerUser(newFName, newLName, pass1, newUName, connection);
+                    if (registered) {
+                        primaryStage.setScene(loginScene);
+                    } else {
+                        status.setText("Something went wrong and you were not registered. Please try again.");
+                    }
+                } else {
+                    status.setText("Passwords do not match. Please enter them again.");
+                }
+            } else {
+                status.setText("Username already exists. Please use a different one.");
+            }
+
+
+        });
 
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Employee Database");
