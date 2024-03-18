@@ -6,10 +6,6 @@ import javax.xml.transform.Result;
 import java.sql.*;
 
 public class LoginChecker {
-
-    //Database_Connector dbConnect = new Database_Connector();
-    //Connection newConnect = dbConnect.establishConnection();
-
     protected boolean checkLoginInformation(String userName, String userPassword, Connection conn) {
         boolean validInformation = false;
 
