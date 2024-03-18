@@ -66,8 +66,8 @@ public class Scene_Repository extends Application{
         //text fields
         TextField newFirstField = new TextField();
         TextField newLastField = new TextField();
-        TextField newPassField = new TextField();
-        TextField passAgainField = new TextField();
+        PasswordField newPassField = new PasswordField();
+        PasswordField passAgainField = new PasswordField();
         TextField newUserName = new TextField();
 
         Text status = new Text();
