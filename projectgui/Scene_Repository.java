@@ -73,13 +73,14 @@ public class Scene_Repository extends Application{
         Text status = new Text();
 
         Button registerUser = new Button("Register");
+        Button goBackLogin = new Button("Return");
 
         registerPane.addRow(0, newFirstName, newFirstField);
         registerPane.addRow(1, newLastName, newLastField);
         registerPane.addRow(2, newUserNameLabel, newUserName);
         registerPane.addRow(3, newPasswordLabel, newPassField);
         registerPane.addRow(4, enterPassAgainLabel, passAgainField);
-        registerPane.addRow(5, registerUser);
+        registerPane.addRow(5, registerUser, goBackLogin);
         registerPane.addRow(6, status);
         Scene registerScene = new Scene(registerPane, 400, 400);
 
@@ -123,9 +124,9 @@ public class Scene_Repository extends Application{
             } else {
                 status.setText("Username already exists. Please use a different one.");
             }
-
-
         });
+
+        goBackLogin.setOnAction(e -> primaryStage.setScene(loginScene));
 
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Employee Database");
