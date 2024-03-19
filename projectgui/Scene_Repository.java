@@ -156,8 +156,10 @@ public class Scene_Repository extends Application{
         loggedIn.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
         Employee_Info empInfo = new Employee_Info();
-        Text currentInfo = new Text(empInfo.singleEmployee(user.getEmpID()));
+        Text currentInfo = new Text();
+        currentInfo.setText(empInfo.singleEmployee(user.getEmpID(), connection));
         VBox employeeInformation = new VBox();
+        employeeInformation.setAlignment(Pos.CENTER);
         employeeInformation.getChildren().add(currentInfo);
 
 
