@@ -32,6 +32,7 @@ public class Employee_Info {
                 department = set.getString(7);
             }
 
+            //System.out.println(id + " " + lastName + " " + firstName + " " + licenseDate + " " + cprAedDate + " " + email + " " + department);
 
             result = "Employee ID: " + id + "\n" +
                     "First Name: " + firstName + "\n" +

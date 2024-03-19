@@ -156,11 +156,15 @@ public class Scene_Repository extends Application{
         loggedIn.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
         Employee_Info empInfo = new Employee_Info();
-        Text currentInfo = new Text();
-        currentInfo.setText(empInfo.singleEmployee(user.getEmpID(), connection));
+        TextArea currentInfo = new TextArea();
+        String result = empInfo.singleEmployee(user.getEmpID(), connection);
+        System.out.println(result);
+        currentInfo.setText(result);
+        currentInfo.setEditable(false);
         VBox employeeInformation = new VBox();
-        employeeInformation.setAlignment(Pos.CENTER);
         employeeInformation.getChildren().add(currentInfo);
+        employeeInformation.setAlignment(Pos.CENTER);
+
 
 
 
@@ -171,7 +175,7 @@ public class Scene_Repository extends Application{
         vBox.getChildren().add(updateButton);
         vBox.setAlignment(Pos.CENTER);
 
-
+        afterLogin.setCenter(employeeInformation);
         afterLogin.setBottom(vBox);
 
         return afterLoginScene;
