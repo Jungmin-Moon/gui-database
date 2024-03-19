@@ -3,6 +3,8 @@ package projectgui;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -151,7 +153,24 @@ public class Scene_Repository extends Application{
         loggedIn.setText("Employee ID: " + user.getEmpID() + "\n" +
                 "Hello, " + user.getName());
         afterLogin.setTop(loggedIn);
+        loggedIn.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
+        Employee_Info empInfo = new Employee_Info();
+        Text currentInfo = new Text(empInfo.singleEmployee(user.getEmpID()));
+        VBox employeeInformation = new VBox();
+        employeeInformation.getChildren().add(currentInfo);
+
+
+
+        Button updateButton = new Button("Update Information");
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
+        vBox.getChildren().add(updateButton);
+        vBox.setAlignment(Pos.CENTER);
+
+
+        afterLogin.setBottom(vBox);
 
         return afterLoginScene;
     }
