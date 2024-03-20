@@ -19,4 +19,10 @@ public class User {
     public int getEmpID() {
         return empID;
     }
+
+    public void clearInformation() {
+        name = null;
+        empID = 0;
+    }
+
 }

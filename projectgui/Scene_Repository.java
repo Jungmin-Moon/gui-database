@@ -23,6 +23,10 @@ public class Scene_Repository extends Application{
     Database_Connector dbConnect = new Database_Connector();
     Connection connection = dbConnect.establishConnection();
 
+    private Button logoutButton = new Button("Log Out");
+
+    private Stage primaryStage;
+
 
 
     @Override
@@ -128,6 +132,8 @@ public class Scene_Repository extends Application{
             }
         });
 
+        logoutButton.setOnAction(e -> logout(primaryStage, loginScene));
+
         goBackLogin.setOnAction(e -> primaryStage.setScene(loginScene));
 
         primaryStage.setScene(loginScene);
@@ -165,18 +171,19 @@ public class Scene_Repository extends Application{
         employeeInformation.getChildren().add(currentInfo);
         employeeInformation.setAlignment(Pos.CENTER);
 
-
-
-
         Button updateButton = new Button("Update Information");
+
         VBox vBox = new VBox();
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
         vBox.getChildren().add(updateButton);
+        vBox.getChildren().add(logoutButton);
         vBox.setAlignment(Pos.CENTER);
 
         afterLogin.setCenter(employeeInformation);
         afterLogin.setBottom(vBox);
+
+        updateButton.setOnAction(e -> primaryStage.setScene(updateScene()));
 
         return afterLoginScene;
     }
@@ -186,5 +193,20 @@ public class Scene_Repository extends Application{
         user.setName(values[1] + " " + values[2]);
     }
 
-    
+    private void logout(Stage pStage, Scene startScene) {
+        pStage.setScene(startScene);
+        user.clearInformation();
+    }
+
+    private Scene updateScene() {
+        BorderPane updatePane = new BorderPane();
+
+        Text token = new Text();
+        token.setText("Employee ID: " + user.getEmpID() + "\n" +
+                "Hello, " + user.getName());
+        updatePane.setTop(token);
+
+
+        return new Scene(updatePane, 400, 400);
+    }
 }
