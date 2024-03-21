@@ -22,6 +22,7 @@ public class Scene_Repository extends Application{
     User user = new User();
     Database_Connector dbConnect = new Database_Connector();
     Connection connection = dbConnect.establishConnection();
+    Employee_Info empInfo = new Employee_Info();
 
     private final Button logoutButton = new Button("Log Out");
 
@@ -145,14 +146,13 @@ public class Scene_Repository extends Application{
 
     private Scene afterLoginScene(Stage pStage) {
         BorderPane afterLogin = new BorderPane();
-        Scene afterLoginScene = new Scene(afterLogin, 400, 400);
+        Scene afterLoginScene = new Scene(afterLogin, 600, 600);
         Text loggedIn = new Text();
         loggedIn.setText("Employee ID: " + user.getEmpID() + "\n" +
                 "Hello, " + user.getName());
         afterLogin.setTop(loggedIn);
         loggedIn.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
-        Employee_Info empInfo = new Employee_Info();
         TextArea currentInfo = new TextArea();
         String result = empInfo.displaySingleEmployee(user.getEmpID(), connection);
 
@@ -215,7 +215,13 @@ public class Scene_Repository extends Application{
         Text databaseCPRAED = new Text();
         Text databaseDepartment = new Text();
 
-
+        String[] employeeInfo = empInfo.returnEmployeeInformation(user.getEmpID(), connection);
+        databaseLastName.setText(employeeInfo[0]);
+        databaseFirstName.setText(employeeInfo[1]);
+        databaseEmail.setText(employeeInfo[2]);
+        databaseLicense.setText(employeeInfo[3]);
+        databaseCPRAED.setText(employeeInfo[4]);
+        databaseDepartment.setText(employeeInfo[5]);
 
         TextField changeLastName = new TextField();
         TextField changeFirstName = new TextField();
@@ -226,6 +232,9 @@ public class Scene_Repository extends Application{
 
         //Gridpane to put on top of the VBox in the center of the borderpane
         GridPane table = new GridPane();
+        //table.setPadding(new Insets(10));
+        table.setVgap(10);
+        table.setHgap(10);
         table.addRow(1, lastName, databaseLastName, changeLastName);
         table.addRow(2, firstName, databaseFirstName, changeFirstName);
         table.addRow(3, empEmail, databaseEmail, changeEmail);
@@ -259,7 +268,7 @@ public class Scene_Repository extends Application{
 
 
 
-        return new Scene(updatePane, 400, 400);
+        return new Scene(updatePane, 600, 600);
     }
 
     private void updateEmployee() {

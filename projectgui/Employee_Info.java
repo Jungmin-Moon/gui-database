@@ -32,7 +32,7 @@ public class Employee_Info {
                 department = set.getString(7);
             }
 
-            //System.out.println(id + " " + lastName + " " + firstName + " " + licenseDate + " " + cprAedDate + " " + email + " " + department);
+
 
             result = "Employee ID: " + id + "\n" +
                     "First Name: " + firstName + "\n" +
@@ -70,5 +70,49 @@ public class Employee_Info {
 
 
         return result;
+    }
+
+
+    protected String[] returnEmployeeInformation(int empID, Connection conn) {
+        String[] info = new String[6];
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+
+        try {
+            String query = "select lastname, firstname, license, cpr_aed, employee_email, department from work_information where employee_id = '" +
+                            empID + "';";
+
+            Statement stmt = conn.createStatement();
+            ResultSet set = stmt.executeQuery(query);
+
+            while (set.next()) {
+                info[0] = set.getString(1);
+                info[1] = set.getString(2);
+
+                if (set.getDate(3) == null)
+                    info[2] = "BLANK";
+                else
+                    info[2] = dateFormat.format(set.getDate(3));
+                if (set.getDate(4) == null)
+                    info[3] = "BLANK";
+                else
+                    info[3] = dateFormat.format(set.getDate(4));
+
+                if (set.getString(5) == null)
+                    info[4] = "BLANK";
+                else
+                    info[4] = set.getString(5);
+
+                if (set.getString(5) == null)
+                    info[5] = "BLANK";
+                else
+                    info[5] = set.getString(6);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return info;
     }
 }
