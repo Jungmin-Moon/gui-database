@@ -206,7 +206,63 @@ public class Scene_Repository extends Application{
                 "Hello, " + user.getName());
         updatePane.setTop(token);
 
+        VBox updateFields = new VBox();
+        updateFields.setAlignment(Pos.CENTER);
+
+        //labels and more
+        Label lastName = new Label("Last Name: ");
+        Label firstName = new Label("First Name: ");
+        Label empEmail = new Label("Email: ");
+        Label license = new Label("License Expiration: ");
+        Label cprAED = new Label("CPR/AED Expiration: ");
+        Label empDepartment = new Label("Department: ");
+
+        Text databaseLastName = new Text();
+        Text databaseFirstName = new Text();
+        Text databaseEmail = new Text();
+        Text databaseLicense = new Text();
+        Text databaseCPRAED = new Text();
+        Text databaseDepartment = new Text();
+
+        TextField changeLastName = new TextField();
+        TextField changeFirstName = new TextField();
+        TextField changeEmail = new TextField();
+        TextField changeLicense = new TextField();
+        TextField changeCPRAED = new TextField();
+        TextField changeDepartment = new TextField();
+
+        //Gridpane to put on top of the VBox in the center of the border pane
+        GridPane table = new GridPane();
+        table.addRow(1, lastName, databaseLastName, changeLastName);
+        table.addRow(2, firstName, databaseFirstName, changeFirstName);
+        table.addRow(3, empEmail, databaseEmail, changeEmail);
+        table.addRow(4, license, databaseLicense, changeLicense);
+        table.addRow(5, cprAED, databaseCPRAED, changeCPRAED);
+        table.addRow(6, empDepartment, databaseDepartment, changeDepartment);
+        updateFields.getChildren().add(table);
+
+
+        Button updateInfo = new Button("Update");
+        Button backOne = new Button("Return");
+
+        VBox updateButtons = new VBox();
+        updateButtons.setAlignment(Pos.CENTER);
+        updateButtons.getChildren().addAll(updateInfo, backOne);
+
+
+        updatePane.setCenter(updateFields);
+        updatePane.setBottom(updateButtons);
+
+        updateInfo.setOnAction(e -> updateEmployee());
+
+        backOne.setOnAction(e -> primaryStage.setScene(afterLoginScene()));
+
+
 
         return new Scene(updatePane, 400, 400);
+    }
+
+    private void updateEmployee() {
+
     }
 }
