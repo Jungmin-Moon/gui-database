@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 public class Employee_Info {
 
 
-    protected String singleEmployee(int employeeID, Connection conn) {
+    protected String displaySingleEmployee(int employeeID, Connection conn) {
         String result = "";
 
         int id = 0;

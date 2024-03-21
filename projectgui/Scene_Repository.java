@@ -23,10 +23,7 @@ public class Scene_Repository extends Application{
     Database_Connector dbConnect = new Database_Connector();
     Connection connection = dbConnect.establishConnection();
 
-    private Button logoutButton = new Button("Log Out");
-
-    private Stage primaryStage;
-
+    private final Button logoutButton = new Button("Log Out");
 
 
     @Override
@@ -47,8 +44,6 @@ public class Scene_Repository extends Application{
         Button loginButton = new Button("Login");
         Button registerButton = new Button("Register");
         Text loginText = new Text("");
-
-
 
         loginPane.addRow(0, userNameLabel, userField);
         loginPane.addRow(1, passwordLabel, passField);
@@ -102,7 +97,7 @@ public class Scene_Repository extends Application{
             if (validateInformation(uName, uPass, connection)) {
                 String[] persistCheck = loginCheck.getInformation(uName, connection);
                 setTokens(persistCheck);
-                primaryStage.setScene(afterLoginScene());
+                primaryStage.setScene(afterLoginScene(primaryStage));
 
             } else {
                 loginText.setText("Does not exist in databasse.");
@@ -145,14 +140,10 @@ public class Scene_Repository extends Application{
 
     private boolean validateInformation(String userName, String userPassword, Connection connection) {
         boolean isValid = loginCheck.checkLoginInformation(userName, userPassword, connection);
-        if (isValid) {
-            return true;
-        } else {
-            return false;
-        }
+        return isValid;
     }
 
-    private Scene afterLoginScene() {
+    private Scene afterLoginScene(Stage pStage) {
         BorderPane afterLogin = new BorderPane();
         Scene afterLoginScene = new Scene(afterLogin, 400, 400);
         Text loggedIn = new Text();
@@ -163,8 +154,8 @@ public class Scene_Repository extends Application{
 
         Employee_Info empInfo = new Employee_Info();
         TextArea currentInfo = new TextArea();
-        String result = empInfo.singleEmployee(user.getEmpID(), connection);
-        System.out.println(result);
+        String result = empInfo.displaySingleEmployee(user.getEmpID(), connection);
+
         currentInfo.setText(result);
         currentInfo.setEditable(false);
         VBox employeeInformation = new VBox();
@@ -183,7 +174,7 @@ public class Scene_Repository extends Application{
         afterLogin.setCenter(employeeInformation);
         afterLogin.setBottom(vBox);
 
-        updateButton.setOnAction(e -> primaryStage.setScene(updateScene()));
+        updateButton.setOnAction(e -> pStage.setScene(updateScene(pStage)));
 
         return afterLoginScene;
     }
@@ -198,7 +189,7 @@ public class Scene_Repository extends Application{
         user.clearInformation();
     }
 
-    private Scene updateScene() {
+    private Scene updateScene(Stage pStage) {
         BorderPane updatePane = new BorderPane();
 
         Text token = new Text();
@@ -224,6 +215,8 @@ public class Scene_Repository extends Application{
         Text databaseCPRAED = new Text();
         Text databaseDepartment = new Text();
 
+
+
         TextField changeLastName = new TextField();
         TextField changeFirstName = new TextField();
         TextField changeEmail = new TextField();
@@ -231,7 +224,7 @@ public class Scene_Repository extends Application{
         TextField changeCPRAED = new TextField();
         TextField changeDepartment = new TextField();
 
-        //Gridpane to put on top of the VBox in the center of the border pane
+        //Gridpane to put on top of the VBox in the center of the borderpane
         GridPane table = new GridPane();
         table.addRow(1, lastName, databaseLastName, changeLastName);
         table.addRow(2, firstName, databaseFirstName, changeFirstName);
@@ -248,14 +241,21 @@ public class Scene_Repository extends Application{
         VBox updateButtons = new VBox();
         updateButtons.setAlignment(Pos.CENTER);
         updateButtons.getChildren().addAll(updateInfo, backOne);
+        updateButtons.setSpacing(10);
+        updateButtons.setPadding(new Insets(10));
 
 
         updatePane.setCenter(updateFields);
         updatePane.setBottom(updateButtons);
 
+        /*
+        When the update info button is clicked. the program will attempt to update the information
+        If it does so successfully, it will then check to see if the employee's name was changed and if it was update
+        the "token" that is always in the top left of the window.
+         */
         updateInfo.setOnAction(e -> updateEmployee());
 
-        backOne.setOnAction(e -> primaryStage.setScene(afterLoginScene()));
+        backOne.setOnAction(e -> pStage.setScene(afterLoginScene(pStage)));
 
 
 
