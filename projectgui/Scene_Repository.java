@@ -226,13 +226,12 @@ public class Scene_Repository extends Application{
         TextField changeLastName = new TextField();
         TextField changeFirstName = new TextField();
         TextField changeEmail = new TextField();
-        TextField changeLicense = new TextField();
-        TextField changeCPRAED = new TextField();
+        DatePicker changeLicense = new DatePicker();
+        DatePicker changeCPRAED = new DatePicker();
         TextField changeDepartment = new TextField();
 
         //Gridpane to put on top of the VBox in the center of the borderpane
         GridPane table = new GridPane();
-        //table.setPadding(new Insets(10));
         table.setVgap(10);
         table.setHgap(10);
         table.addRow(1, lastName, databaseLastName, changeLastName);
@@ -243,7 +242,6 @@ public class Scene_Repository extends Application{
         table.addRow(6, empDepartment, databaseDepartment, changeDepartment);
         updateFields.getChildren().add(table);
 
-
         Button updateInfo = new Button("Update");
         Button backOne = new Button("Return");
 
@@ -253,7 +251,6 @@ public class Scene_Repository extends Application{
         updateButtons.setSpacing(10);
         updateButtons.setPadding(new Insets(10));
 
-
         updatePane.setCenter(updateFields);
         updatePane.setBottom(updateButtons);
 
@@ -262,16 +259,19 @@ public class Scene_Repository extends Application{
         If it does so successfully, it will then check to see if the employee's name was changed and if it was update
         the "token" that is always in the top left of the window.
          */
-        updateInfo.setOnAction(e -> updateEmployee());
+        updateInfo.setOnAction(e ->  {
+            String[] updatedInformation = {changeLastName.getText(), changeFirstName.getText(), changeEmail.getText(),
+                    String.valueOf(changeLicense.getValue()), String.valueOf(changeCPRAED.getValue()), changeDepartment.getText()};
+            updateEmployee(updatedInformation);
+            pStage.setScene((afterLoginScene(pStage)));
+        });
 
         backOne.setOnAction(e -> pStage.setScene(afterLoginScene(pStage)));
-
-
 
         return new Scene(updatePane, 600, 600);
     }
 
-    private void updateEmployee() {
+    private void updateEmployee(String[] information) {
 
     }
 }
