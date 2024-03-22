@@ -11,7 +11,7 @@ public class Employee_Info {
 
         int id = 0;
         String lastName = "", firstName = "", email = "", department = "";
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD");
         Date licenseDate = null, cprAedDate = null;
         String formattedDateLicense = null;
         String formattedDateCPRAED = null;
@@ -41,15 +41,15 @@ public class Employee_Info {
             if (licenseDate == null) {
                 result = result + "License Expiration Date: NULL" + "\n";
             } else {
-                formattedDateLicense = dateFormat.format(licenseDate);
-                result = result + "License Expiration Date: " + formattedDateLicense + "\n";
+                //formattedDateLicense = dateFormat.format(licenseDate);
+                result = result + "License Expiration Date: " + licenseDate + "\n";
             }
 
             if (cprAedDate == null) {
                 result = result + "CPR/AED Expiration Date: NULL" + "\n";
             } else {
-                formattedDateCPRAED = dateFormat.format(cprAedDate);
-                result = result + "CPR/AED Expiration Date: " + formattedDateCPRAED + "\n";
+                //formattedDateCPRAED = dateFormat.format(cprAedDate);
+                result = result + "CPR/AED Expiration Date: " + cprAedDate + "\n";
             }
 
             if (email == null) {
@@ -79,7 +79,7 @@ public class Employee_Info {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
         try {
-            String query = "select lastname, firstname, license, cpr_aed, employee_email, department from work_information where employee_id = '" +
+            String query = "select lastname, firstname, employee_email, license, cpr_aed, department from work_information where employee_id = '" +
                             empID + "';";
 
             Statement stmt = conn.createStatement();
@@ -89,21 +89,21 @@ public class Employee_Info {
                 info[0] = set.getString(1);
                 info[1] = set.getString(2);
 
-                if (set.getDate(3) == null)
+                if (set.getString(3) == null)
                     info[2] = "BLANK";
                 else
-                    info[2] = dateFormat.format(set.getDate(3));
+                    info[2] = set.getString(3);
                 if (set.getDate(4) == null)
                     info[3] = "BLANK";
                 else
-                    info[3] = dateFormat.format(set.getDate(4));
+                    info[3] = String.valueOf(set.getDate(4));
 
-                if (set.getString(5) == null)
+                if (set.getDate(5) == null)
                     info[4] = "BLANK";
                 else
-                    info[4] = set.getString(5);
+                    info[4] = String.valueOf(set.getDate(5));
 
-                if (set.getString(5) == null)
+                if (set.getString(6) == null)
                     info[5] = "BLANK";
                 else
                     info[5] = set.getString(6);
