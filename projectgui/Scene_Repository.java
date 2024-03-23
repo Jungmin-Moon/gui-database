@@ -181,7 +181,8 @@ public class Scene_Repository extends Application{
 
     private void setTokens(String[] values) {
         user.setEmpID(Integer.parseInt(values[0]));
-        user.setName(values[1] + " " + values[2]);
+        user.setFirstName(values[1]);
+        user.setLastName(values[2]);
     }
 
     private void logout(Stage pStage, Scene startScene) {
@@ -195,6 +196,7 @@ public class Scene_Repository extends Application{
         Text token = new Text();
         token.setText("Employee ID: " + user.getEmpID() + "\n" +
                 "Hello, " + user.getName());
+        token.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         updatePane.setTop(token);
 
         VBox updateFields = new VBox();
@@ -262,7 +264,7 @@ public class Scene_Repository extends Application{
         updateInfo.setOnAction(e ->  {
             String[] updatedInformation = {changeLastName.getText(), changeFirstName.getText(), changeEmail.getText(),
                     String.valueOf(changeLicense.getValue()), String.valueOf(changeCPRAED.getValue()), changeDepartment.getText()};
-            updateEmployee(updatedInformation);
+            empInfo.updateEmployee(updatedInformation, connection);
             pStage.setScene((afterLoginScene(pStage)));
         });
 
@@ -271,7 +273,4 @@ public class Scene_Repository extends Application{
         return new Scene(updatePane, 600, 600);
     }
 
-    private void updateEmployee(String[] information) {
-
-    }
 }

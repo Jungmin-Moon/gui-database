@@ -115,4 +115,37 @@ public class Employee_Info {
 
         return info;
     }
+
+    protected void updateEmployee(String[] information, Connection conn) {
+        /*
+        last name, firstname, email, license, cpraed, department
+         */
+        //multiple update utility methods, so at most 6 extra methods
+
+
+    }
+
+    protected void updateLastName(String lastName) {
+
+    }
+
+    protected void updateFirstName(String firstName) {
+
+    }
+
+    protected void updateEmail(String email) {
+
+    }
+
+    protected void updateLicense(Date license) {
+
+    }
+
+    protected void updateCPRAED(Date cprAed) {
+
+    }
+
+    protected void updateDepartment(String department) {
+
+    }
 }
