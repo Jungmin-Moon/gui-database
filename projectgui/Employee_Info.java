@@ -121,31 +121,42 @@ public class Employee_Info {
         last name, firstname, email, license, cpraed, department
          */
         //multiple update utility methods, so at most 6 extra methods
+        if (information[0] != null) {
+            updateLastName(information[0], conn);
+        }
+
+        if (information[1] != null) {
+            updateFirstName(information[1], conn);
+        }
+
+        if (information[2] != null) {
+            updateEmail(information[2], conn);
+        }
 
 
     }
 
-    protected void updateLastName(String lastName) {
+    protected void updateLastName(String lastName, Connection conn) {
 
     }
 
-    protected void updateFirstName(String firstName) {
+    protected void updateFirstName(String firstName, Connection conn) {
 
     }
 
-    protected void updateEmail(String email) {
+    protected void updateEmail(String email, Connection conn) {
 
     }
 
-    protected void updateLicense(Date license) {
+    protected void updateLicense(Date license, Connection conn) {
 
     }
 
-    protected void updateCPRAED(Date cprAed) {
+    protected void updateCPRAED(Date cprAed, Connection conn) {
 
     }
 
-    protected void updateDepartment(String department) {
+    protected void updateDepartment(String department, Connection conn) {
 
     }
 }

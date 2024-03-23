@@ -261,6 +261,8 @@ public class Scene_Repository extends Application{
         If it does so successfully, it will then check to see if the employee's name was changed and if it was update
         the "token" that is always in the top left of the window.
          */
+
+        //need to update and put a null checker then add the converted version to the array
         updateInfo.setOnAction(e ->  {
             String[] updatedInformation = {changeLastName.getText(), changeFirstName.getText(), changeEmail.getText(),
                     String.valueOf(changeLicense.getValue()), String.valueOf(changeCPRAED.getValue()), changeDepartment.getText()};
