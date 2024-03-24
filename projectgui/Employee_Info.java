@@ -116,47 +116,57 @@ public class Employee_Info {
         return info;
     }
 
-    protected void updateEmployee(String[] information, Connection conn) {
+    protected void updateEmployee(int id, String[] information, Connection conn) {
         /*
         last name, firstname, email, license, cpraed, department
          */
         //multiple update utility methods, so at most 6 extra methods
-        if (information[0] != null) {
-            updateLastName(information[0], conn);
+        if (!information[0].isEmpty()) {
+            updateLastName(information[0], conn, id);
         }
 
-        if (information[1] != null) {
-            updateFirstName(information[1], conn);
+        if (!information[1].isEmpty()) {
+            updateFirstName(information[1], conn, id);
         }
 
-        if (information[2] != null) {
-            updateEmail(information[2], conn);
+        if (!information[2].isEmpty()) {
+            updateEmail(information[2], conn, id);
         }
 
+        if(!information[3].equalsIgnoreCase("blank")) {
+            updateLicense(information[3], conn, id);
+        }
+
+        if(!information[4].equalsIgnoreCase("blank")) {
+            updateCPRAED(information[4], conn, id);
+        }
+
+        if (!information[5].isEmpty()) {
+            updateDepartment(information[5], conn, id);
+        }
+    }
+
+    protected void updateLastName(String lastName, Connection conn, int id) {
 
     }
 
-    protected void updateLastName(String lastName, Connection conn) {
+    protected void updateFirstName(String firstName, Connection conn, int id) {
 
     }
 
-    protected void updateFirstName(String firstName, Connection conn) {
+    protected void updateEmail(String email, Connection conn, int id) {
 
     }
 
-    protected void updateEmail(String email, Connection conn) {
+    protected void updateLicense(String license, Connection conn, int id) {
 
     }
 
-    protected void updateLicense(Date license, Connection conn) {
+    protected void updateCPRAED(String cprAed, Connection conn, int id) {
 
     }
 
-    protected void updateCPRAED(Date cprAed, Connection conn) {
-
-    }
-
-    protected void updateDepartment(String department, Connection conn) {
+    protected void updateDepartment(String department, Connection conn, int id) {
 
     }
 }

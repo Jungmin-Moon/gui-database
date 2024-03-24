@@ -264,9 +264,25 @@ public class Scene_Repository extends Application{
 
         //need to update and put a null checker then add the converted version to the array
         updateInfo.setOnAction(e ->  {
+
+            String licenseCheck = "";
+            String cpraedCheck = "";
+
+            if (String.valueOf(changeLicense.getValue()) == null) {
+                licenseCheck = "BLANK";
+            } else {
+                licenseCheck = String.valueOf(changeLicense.getValue());
+            }
+
+            if (String.valueOf(changeCPRAED.getValue()) == null) {
+                cpraedCheck = "BLANK";
+            } else {
+                cpraedCheck = String.valueOf(changeCPRAED.getValue());
+            }
+
             String[] updatedInformation = {changeLastName.getText(), changeFirstName.getText(), changeEmail.getText(),
-                    String.valueOf(changeLicense.getValue()), String.valueOf(changeCPRAED.getValue()), changeDepartment.getText()};
-            empInfo.updateEmployee(updatedInformation, connection);
+                    licenseCheck, cpraedCheck, changeDepartment.getText()};
+            empInfo.updateEmployee(user.getEmpID(), updatedInformation, connection);
             pStage.setScene((afterLoginScene(pStage)));
         });
 
