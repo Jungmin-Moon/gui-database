@@ -147,15 +147,36 @@ public class Employee_Info {
     }
 
     protected void updateLastName(String lastName, Connection conn, int id) {
+        try {
+            String query = "update work_information set lastname = '" + lastName + "' where employee_id = '" + id + "';";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void updateFirstName(String firstName, Connection conn, int id) {
+        try {
+            String query = "update work_information set firstname = '" + firstName + "' where employee_id = '" + id + "';";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void updateEmail(String email, Connection conn, int id) {
+        try {
+            String query = "update work_information set email = '" + email + "' where employee_id = '" + id + "';";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void updateLicense(String license, Connection conn, int id) {
@@ -167,6 +188,13 @@ public class Employee_Info {
     }
 
     protected void updateDepartment(String department, Connection conn, int id) {
+        try {
+            String query = "update work_information set department = '" + department + "' where employee_id = '" + id + "';";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
