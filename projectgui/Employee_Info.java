@@ -172,7 +172,7 @@ public class Employee_Info {
 
     protected void updateEmail(String email, Connection conn, int id) {
         try {
-            String query = "update work_information set email = '" + email + "' where employee_id = '" + id + "';";
+            String query = "update work_information set employee_email = '" + email + "' where employee_id = '" + id + "';";
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(query);
 
