@@ -2,6 +2,8 @@ package projectgui;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Employee_Info {
 
@@ -76,7 +78,7 @@ public class Employee_Info {
     protected String[] returnEmployeeInformation(int empID, Connection conn) {
         String[] info = new String[6];
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
             String query = "select lastname, firstname, employee_email, license, cpr_aed, department from work_information where employee_id = '" +
@@ -179,12 +181,30 @@ public class Employee_Info {
         }
     }
 
+    //each date from date picker is in MM/DD/YYYY format
     protected void updateLicense(String license, Connection conn, int id) {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(license, format);
+        try {
+            String query = "update work_information set license = '" + date + "' where employee_id = '" + id + "';";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     protected void updateCPRAED(String cprAed, Connection conn, int id) {
-
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(cprAed, format);
+        try {
+            String query = "update work_information set cpr_aed = '" + date + "' where employee_id = '" + id + "';";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void updateDepartment(String department, Connection conn, int id) {
