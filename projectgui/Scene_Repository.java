@@ -86,10 +86,6 @@ public class Scene_Repository extends Application{
         registerPane.addRow(6, status);
         Scene registerScene = new Scene(registerPane, 400, 400);
 
-
-        VBox updateInfo = new VBox();
-        Scene updateInfoScene = new Scene(updateInfo);
-
         //event handling
         registerButton.setOnAction(e -> primaryStage.setScene(registerScene));
         loginButton.setOnAction(e -> {
