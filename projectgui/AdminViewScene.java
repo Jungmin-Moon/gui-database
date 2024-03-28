@@ -15,4 +15,8 @@ import java.sql.*;
 public class AdminViewScene {
     //a class meant to be for admin view of the database
     //will only return a scene if the user who logged in is admin.
+
+    //table view of entire table for roles
+
+    //will need to create a choosable menu with choices and the admin will be able to assign
 }
