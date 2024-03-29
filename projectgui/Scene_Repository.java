@@ -24,6 +24,8 @@ public class Scene_Repository extends Application{
     Connection connection = dbConnect.establishConnection();
     Employee_Info empInfo = new Employee_Info();
 
+    AdminViewScene adminView = new AdminViewScene();
+
     private final Button logoutButton = new Button("Log Out");
 
 
@@ -93,8 +95,12 @@ public class Scene_Repository extends Application{
             String uPass = passField.getText();
             if (validateInformation(uName, uPass, connection)) {
                 String[] persistCheck = loginCheck.getInformation(uName, connection);
-                setTokens(persistCheck);
-                primaryStage.setScene(afterLoginScene(primaryStage));
+                if (persistCheck[1].equalsIgnoreCase("admin")) {
+                    primaryStage.setScene(adminView.adminView(connection));
+                } else {
+                    setTokens(persistCheck);
+                    primaryStage.setScene(afterLoginScene(primaryStage));
+                }
 
             } else {
                 loginText.setText("Does not exist in databasse.");
