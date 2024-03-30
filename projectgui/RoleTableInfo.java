@@ -8,23 +8,25 @@ public class RoleTableInfo {
     SimpleStringProperty id;
     SimpleStringProperty role;
 
+
     RoleTableInfo(String id, String firstName, String lastName, String role) {
         this.id = new SimpleStringProperty(id);
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.role = new SimpleStringProperty(role);
     }
-
-    public String getId() {
-        return id.get();
+    public String getID() {
+        return this.id.get();
     }
-    public void setId(String id) {
+
+    public void setID(String id) {
         this.id.set(id);
     }
 
     public String getFirstName() {
         return firstName.get();
     }
+
     public void setFirstName(String firstName) {
         this.firstName.set(firstName);
     }
@@ -32,6 +34,7 @@ public class RoleTableInfo {
     public String getLastName() {
         return lastName.get();
     }
+
     public void setLastName(String lastName) {
         this.lastName.set(lastName);
     }
@@ -39,6 +42,7 @@ public class RoleTableInfo {
     public String getRole() {
         return role.get();
     }
+
     public void setRole(String role) {
         this.role.set(role);
     }

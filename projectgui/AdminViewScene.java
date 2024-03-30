@@ -1,5 +1,7 @@
 package projectgui;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -14,6 +16,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
+import javafx.util.Callback;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -23,6 +27,8 @@ public class AdminViewScene {
 
     //table view of entire table for roles
 
+
+
     public Scene adminView (Connection conn) {
         BorderPane adminPane = new BorderPane();
         Text welcomeAdmin = new Text();
@@ -30,46 +36,63 @@ public class AdminViewScene {
         adminPane.setTop(welcomeAdmin);
 
         TableView<RoleTableInfo> table = new TableView<>();
-        ObservableList<RoleTableInfo> data = getList(conn);
-        table.setItems(data);
 
-        TableColumn empIDColumn = new TableColumn("Employee ID");
-        TableColumn firstNameColumn = new TableColumn("First Name");
-        TableColumn lastNameColumn = new TableColumn("Last Name");
-        TableColumn roleColumn = new TableColumn("Role");
-        
-        empIDColumn.setCellValueFactory(new PropertyValueFactory<RoleTableInfo, String>("id"));
-        firstNameColumn.setCellValueFactory(new PropertyValueFactory<RoleTableInfo, String>("firstName"));
-        lastNameColumn.setCellValueFactory(new PropertyValueFactory<RoleTableInfo, String>("lastName"));
-        roleColumn.setCellValueFactory(new PropertyValueFactory<RoleTableInfo, String>("role"));
-
-        adminPane.setCenter(table);
-
-
-        return new Scene(adminPane, 500,500);
-    }
-
-    public ObservableList<RoleTableInfo> getList(Connection conn) {
         ObservableList<RoleTableInfo> data = FXCollections.observableArrayList();
         try {
             String query = "Select * from employee_roles;";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            ResultSetMetaData rd = rs.getMetaData();
-
-            ArrayList<RoleTableInfo> roleTableList = new ArrayList<>();
 
             while (rs.next()) {
-                roleTableList.add(new RoleTableInfo(String.valueOf(rs.getInt(1)), rs.getString(2), rs.getString(3),
-                                    rs.getString(4)));
+                if (rs.getString(4) == null) {
+                    RoleTableInfo rInfo = new RoleTableInfo(
+                            String.valueOf(rs.getInt(1)),
+                            rs.getString(2),
+                            rs.getString(3),
+                            "BLANK"
+                    );
+                    data.add(rInfo);
+                } else {
+                    RoleTableInfo rInfo = new RoleTableInfo(
+                            String.valueOf(rs.getInt(1)),
+                            rs.getString(2),
+                            rs.getString(3),
+                            rs.getString(4)
+                    );
+                    data.add(rInfo);
+                }
+
             }
-            data.addAll(roleTableList);
+
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return data;
+        table.setItems(data);
+
+        TableColumn idCol = new TableColumn("ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn firstNameCol = new TableColumn("First Name");
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+
+        TableColumn lastNameCol = new TableColumn("Last Name");
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+
+        TableColumn roleCol = new TableColumn("Role");
+        roleCol.setCellValueFactory(new PropertyValueFactory<>("Role"));
+
+        //table.setItems(data);
+        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        table.getColumns().addAll(idCol, firstNameCol, lastNameCol, roleCol);
+
+        adminPane.setCenter(table);
+
+        return new Scene(adminPane, 500,500);
     }
+
+
 
 }
