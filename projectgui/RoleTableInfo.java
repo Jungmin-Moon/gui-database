@@ -1,26 +1,27 @@
 package projectgui;
 
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 
 public class RoleTableInfo {
     SimpleStringProperty firstName;
     SimpleStringProperty lastName;
-    SimpleStringProperty id;
+    SimpleStringProperty empId;
     SimpleStringProperty role;
 
 
     RoleTableInfo(String id, String firstName, String lastName, String role) {
-        this.id = new SimpleStringProperty(id);
+        empId = new SimpleStringProperty(id);
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.role = new SimpleStringProperty(role);
     }
-    public String getID() {
-        return this.id.get();
+    public Property<String> empIdProperty() {
+        return empId;
     }
 
-    public void setID(String id) {
-        this.id.set(id);
+    public void empId(String id) {
+        empId.set(id);
     }
 
     public String getFirstName() {

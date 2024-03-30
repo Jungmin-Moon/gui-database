@@ -72,8 +72,8 @@ public class AdminViewScene {
 
         table.setItems(data);
 
-        TableColumn idCol = new TableColumn("ID");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn idCol = new TableColumn("Employee ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("empId"));
 
         TableColumn firstNameCol = new TableColumn("First Name");
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -82,13 +82,24 @@ public class AdminViewScene {
         lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 
         TableColumn roleCol = new TableColumn("Role");
-        roleCol.setCellValueFactory(new PropertyValueFactory<>("Role"));
+        roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         //table.setItems(data);
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         table.getColumns().addAll(idCol, firstNameCol, lastNameCol, roleCol);
 
         adminPane.setCenter(table);
+
+        GridPane bottomPane = new GridPane();
+        TextArea sqlInputs = new TextArea();
+        Button executeSQL = new Button("Execute");
+        bottomPane.addRow(1, sqlInputs);
+        bottomPane.addRow(2, executeSQL);
+        bottomPane.setHgap(10);
+        bottomPane.setVgap(10);
+
+        adminPane.setBottom(bottomPane);
+
 
         return new Scene(adminPane, 500,500);
     }

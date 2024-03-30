@@ -103,7 +103,7 @@ public class Scene_Repository extends Application{
                 }
 
             } else {
-                loginText.setText("Does not exist in databasse.");
+                loginText.setText("Does not exist in database.");
             }
         });
 
