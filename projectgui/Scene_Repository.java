@@ -96,7 +96,7 @@ public class Scene_Repository extends Application{
             if (validateInformation(uName, uPass, connection)) {
                 String[] persistCheck = loginCheck.getInformation(uName, connection);
                 if (persistCheck[1].equalsIgnoreCase("admin")) {
-                    primaryStage.setScene(adminView.adminView(connection));
+                    primaryStage.setScene(adminView.adminView(connection, loginScene, primaryStage));
                 } else {
                     setTokens(persistCheck);
                     primaryStage.setScene(afterLoginScene(primaryStage));

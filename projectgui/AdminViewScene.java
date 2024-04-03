@@ -22,20 +22,15 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class AdminViewScene {
-    //a class meant to be for admin view of the database
-    //will only return a scene if the user who logged in is admin.
 
-    //table view of entire table for roles
-
-
-
-    public Scene adminView (Connection conn) {
+    public Scene adminView (Connection conn, Scene loginScene, Stage pStage) {
         BorderPane adminPane = new BorderPane();
         Text welcomeAdmin = new Text();
         welcomeAdmin.setText("Hello, Admin");
         adminPane.setTop(welcomeAdmin);
 
         TableView<RoleTableInfo> table = new TableView<>();
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
         ObservableList<RoleTableInfo> data = FXCollections.observableArrayList();
         try {
@@ -70,6 +65,9 @@ public class AdminViewScene {
             throw new RuntimeException(e);
         }
 
+
+
+
         table.setItems(data);
 
         TableColumn idCol = new TableColumn("Employee ID");
@@ -84,24 +82,31 @@ public class AdminViewScene {
         TableColumn roleCol = new TableColumn("Role");
         roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
 
-        //table.setItems(data);
+
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         table.getColumns().addAll(idCol, firstNameCol, lastNameCol, roleCol);
+
 
         adminPane.setCenter(table);
 
         GridPane bottomPane = new GridPane();
         TextArea sqlInputs = new TextArea();
         Button executeSQL = new Button("Execute");
+        Button logout = new Button("Logout");
         bottomPane.addRow(1, sqlInputs);
-        bottomPane.addRow(2, executeSQL);
+        bottomPane.addRow(2, executeSQL, logout);
         bottomPane.setHgap(10);
         bottomPane.setVgap(10);
 
         adminPane.setBottom(bottomPane);
 
+        logout.setOnAction(e -> logout(loginScene, pStage));
 
         return new Scene(adminPane, 500,500);
+    }
+
+    public void logout(Scene loginScene, Stage pStage) {
+        pStage.setScene(loginScene);
     }
 
 
