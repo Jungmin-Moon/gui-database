@@ -29,6 +29,7 @@ public class AdminViewScene {
         welcomeAdmin.setText("Hello, Admin");
         adminPane.setTop(welcomeAdmin);
 
+        /*
         TableView<RoleTableInfo> table = new TableView<>();
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
@@ -58,16 +59,9 @@ public class AdminViewScene {
                 }
 
             }
-
-
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-
-
         table.setItems(data);
 
         TableColumn idCol = new TableColumn("Employee ID");
@@ -85,9 +79,9 @@ public class AdminViewScene {
 
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         table.getColumns().addAll(idCol, firstNameCol, lastNameCol, roleCol);
+        */
 
-
-        adminPane.setCenter(table);
+        adminPane.setCenter(returnTable(conn));
 
         GridPane bottomPane = new GridPane();
         TextArea sqlInputs = new TextArea();
@@ -98,6 +92,9 @@ public class AdminViewScene {
         HBox.setHgrow(region, Priority.ALWAYS);
         HBox hbButtons = new HBox(executeSQL, region, logout);
 
+        Text successText = new Text();
+
+        bottomPane.addRow(0, successText);
         bottomPane.addRow(1, sqlInputs);
         bottomPane.addRow(2, hbButtons);
         bottomPane.setHgap(10);
@@ -107,6 +104,14 @@ public class AdminViewScene {
         adminPane.setBottom(bottomPane);
 
         logout.setOnAction(e -> logout(loginScene, pStage));
+        executeSQL.setOnAction(e ->  {
+            if (executeTextAreaSQL(sqlInputs.getText(), conn) > 0) {
+                successText.setText("Update successful.");
+            } else {
+                successText.setText("Something went wrong with the SQL query.");
+            }
+            adminPane.setCenter(returnTable(conn));
+        });
 
         return new Scene(adminPane, 500,500);
     }
@@ -115,6 +120,70 @@ public class AdminViewScene {
         pStage.setScene(loginScene);
     }
 
+    public int executeTextAreaSQL(String text, Connection conn) {
+        int successOrFail = 0;
 
+        try {
+            Statement stmt = conn.createStatement();
+            successOrFail = stmt.executeUpdate(text);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
+        return successOrFail;
+    }
+
+    public TableView<RoleTableInfo> returnTable(Connection conn) {
+        TableView<RoleTableInfo> table = new TableView<>();
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
+        ObservableList<RoleTableInfo> data = FXCollections.observableArrayList();
+        try {
+            String query = "Select * from employee_roles;";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                if (rs.getString(4) == null) {
+                    RoleTableInfo rInfo = new RoleTableInfo(
+                            String.valueOf(rs.getInt(1)),
+                            rs.getString(2),
+                            rs.getString(3),
+                            "BLANK"
+                    );
+                    data.add(rInfo);
+                } else {
+                    RoleTableInfo rInfo = new RoleTableInfo(
+                            String.valueOf(rs.getInt(1)),
+                            rs.getString(2),
+                            rs.getString(3),
+                            rs.getString(4)
+                    );
+                    data.add(rInfo);
+                }
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        table.setItems(data);
+
+        TableColumn idCol = new TableColumn("Employee ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("empId"));
+
+        TableColumn firstNameCol = new TableColumn("First Name");
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+
+        TableColumn lastNameCol = new TableColumn("Last Name");
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+
+        TableColumn roleCol = new TableColumn("Role");
+        roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
+
+        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        table.getColumns().addAll(idCol, firstNameCol, lastNameCol, roleCol);
+
+        return table;
+    }
 }
