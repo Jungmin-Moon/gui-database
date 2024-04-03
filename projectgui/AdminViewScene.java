@@ -93,10 +93,16 @@ public class AdminViewScene {
         TextArea sqlInputs = new TextArea();
         Button executeSQL = new Button("Execute");
         Button logout = new Button("Logout");
+
+        Region region = new Region();
+        HBox.setHgrow(region, Priority.ALWAYS);
+        HBox hbButtons = new HBox(executeSQL, region, logout);
+
         bottomPane.addRow(1, sqlInputs);
-        bottomPane.addRow(2, executeSQL, logout);
+        bottomPane.addRow(2, hbButtons);
         bottomPane.setHgap(10);
         bottomPane.setVgap(10);
+        bottomPane.setPadding(new Insets(10, 10, 10, 10));
 
         adminPane.setBottom(bottomPane);
 
