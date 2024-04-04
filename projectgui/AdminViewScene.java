@@ -110,6 +110,7 @@ public class AdminViewScene {
             } else {
                 successText.setText("Something went wrong with the SQL query.");
             }
+            sqlInputs.setText("");
             adminPane.setCenter(returnTable(conn));
         });
 

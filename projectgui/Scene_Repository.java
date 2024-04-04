@@ -93,6 +93,8 @@ public class Scene_Repository extends Application{
         loginButton.setOnAction(e -> {
             String uName = userField.getText();
             String uPass = passField.getText();
+            userField.setText("");
+            passField.setText("");
             if (validateInformation(uName, uPass, connection)) {
                 String[] persistCheck = loginCheck.getInformation(uName, connection);
                 if (persistCheck[1].equalsIgnoreCase("admin")) {
@@ -111,11 +113,16 @@ public class Scene_Repository extends Application{
             String pass1 = newPassField.getText();
             String pass2 = passAgainField.getText();
             String newUName = newUserName.getText();
+            newPassField.setText("");
+            passAgainField.setText("");
+            newUserName.setText("");
 
             if (!registerCheck.checkUserExists(newUName, connection)) {
                 if (pass1.equals(pass2)) {
                     String newFName = newFirstField.getText();
                     String newLName = newLastField.getText();
+                    newFirstField.setText("");
+                    newLastField.setText("");
                     boolean registered = registerCheck.registerUser(newFName, newLName, pass1, newUName, connection);
                     if (registered) {
                         primaryStage.setScene(loginScene);
@@ -132,7 +139,15 @@ public class Scene_Repository extends Application{
 
         logoutButton.setOnAction(e -> logout(primaryStage, loginScene));
 
-        goBackLogin.setOnAction(e -> primaryStage.setScene(loginScene));
+        goBackLogin.setOnAction(e -> {
+            newPassField.setText("");
+            passAgainField.setText("");
+            newUserName.setText("");
+            newFirstField.setText("");
+            newLastField.setText("");
+            primaryStage.setScene(loginScene);
+
+        });
 
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Employee Database");
