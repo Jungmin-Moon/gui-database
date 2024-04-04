@@ -87,10 +87,15 @@ public class AdminViewScene {
         TextArea sqlInputs = new TextArea();
         Button executeSQL = new Button("Execute");
         Button logout = new Button("Logout");
+        Button viewLoginTable = new Button("View Login Table");
+        Button viewWorkTable = new Button("View Work Table");
+        Button viewRoleTable = new Button("View Role Table");
 
         Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
-        HBox hbButtons = new HBox(executeSQL, region, logout);
+        HBox hbButtons = new HBox();
+        hbButtons.getChildren().addAll(executeSQL, viewLoginTable, viewWorkTable, viewRoleTable, logout);
+        hbButtons.setSpacing(10);
 
         Text successText = new Text();
 
