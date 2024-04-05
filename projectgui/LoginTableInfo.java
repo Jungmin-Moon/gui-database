@@ -11,7 +11,7 @@ public class LoginTableInfo {
     SimpleStringProperty userName;
     SimpleStringProperty password;
 
-    LoginTableInfo(int employeeID, String firstName, String lastName, String userName, String pass) {
+    LoginTableInfo(int employeeID, String lastName, String firstName, String userName, String pass) {
         empID = new SimpleIntegerProperty(employeeID);
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);

@@ -67,6 +67,9 @@ public class AdminViewScene {
             adminPane.setCenter(returnTable(conn));
         });
 
+        viewLoginTable.setOnAction(e -> adminPane.setCenter(returnLoginTable(conn)));
+        viewRoleTable.setOnAction(e -> adminPane.setCenter(returnTable(conn)));
+
         return new Scene(adminPane, 500,500);
     }
 
@@ -144,10 +147,48 @@ public class AdminViewScene {
     public TableView<LoginTableInfo> returnLoginTable(Connection conn) {
         TableView<LoginTableInfo> loginTable = new TableView<>();
         loginTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
-        ObservableList<RoleTableInfo> data = FXCollections.observableArrayList();
+        ObservableList<LoginTableInfo> loginTableData = FXCollections.observableArrayList();
 
+        //select * order is Employee_ID, LastName FirstName, UserName, UserPassword
+        try {
+            String query = "Select * from login_information;";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
 
+            while(rs.next()) {
+                LoginTableInfo ltInfo = new LoginTableInfo(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5)
+                );
 
+                loginTableData.add(ltInfo);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        loginTable.setItems(loginTableData);
+
+        TableColumn idCol = new TableColumn("Employee ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("empID"));
+
+        TableColumn lastNameCol = new TableColumn("Last Name");
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+
+        TableColumn firstNameCol = new TableColumn("First Name");
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+
+        TableColumn userNameCol = new TableColumn("Username");
+        userNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));
+
+        TableColumn userPassCol = new TableColumn("User Password");
+        userPassCol.setCellValueFactory(new PropertyValueFactory<>("password"));
+
+        loginTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        loginTable.getColumns().addAll(idCol, lastNameCol, firstNameCol, userNameCol, userPassCol);
 
         return loginTable;
     }
