@@ -141,5 +141,23 @@ public class AdminViewScene {
         return table;
     }
 
+    public TableView<LoginTableInfo> returnLoginTable(Connection conn) {
+        TableView<LoginTableInfo> loginTable = new TableView<>();
+        loginTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        ObservableList<RoleTableInfo> data = FXCollections.observableArrayList();
 
+
+
+
+        return loginTable;
+    }
+
+    public TableView<WorkTableInfo> returnWorkTable(Connection conn) {
+        TableView<WorkTableInfo> workTable = new TableView<>();
+        workTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        ObservableList<WorkTableInfo> workData = FXCollections.observableArrayList();
+
+
+        return workTable;
+    }
 }
