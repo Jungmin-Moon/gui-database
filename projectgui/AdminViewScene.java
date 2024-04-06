@@ -25,6 +25,9 @@ public class AdminViewScene {
 
     public Scene adminView (Connection conn, Scene loginScene, Stage pStage) {
         BorderPane adminPane = new BorderPane();
+
+        Scene adminScene = new Scene(adminPane, 500, 500);
+
         Text welcomeAdmin = new Text();
         welcomeAdmin.setText("Hello, Admin");
         adminPane.setTop(welcomeAdmin);
@@ -39,20 +42,40 @@ public class AdminViewScene {
         Button viewWorkTable = new Button("View Work Table");
         Button viewRoleTable = new Button("View Role Table");
 
-        Region region = new Region();
-        HBox.setHgrow(region, Priority.ALWAYS);
+        HBox textAreaContainer = new HBox();
+        sqlInputs.prefWidthProperty().bind(bottomPane.prefWidthProperty());
+        HBox.setHgrow(sqlInputs, Priority.ALWAYS);
+        textAreaContainer.getChildren().add(sqlInputs);
+
         HBox hbButtons = new HBox();
+
+        //setting it so each button will scale
+        //also makes it so their width is the max value of double
+        HBox.setHgrow(executeSQL, Priority.ALWAYS);
+        HBox.setHgrow(viewLoginTable, Priority.ALWAYS);
+        HBox.setHgrow(viewWorkTable, Priority.ALWAYS);
+        HBox.setHgrow(viewRoleTable, Priority.ALWAYS);
+        HBox.setHgrow(logout, Priority.ALWAYS);
+        executeSQL.setMaxWidth(Double.MAX_VALUE);
+        viewLoginTable.setMaxWidth(Double.MAX_VALUE);
+        viewWorkTable.setMaxWidth(Double.MAX_VALUE);
+        viewRoleTable.setMaxWidth(Double.MAX_VALUE);
+        logout.setMaxWidth(Double.MAX_VALUE);
+
         hbButtons.getChildren().addAll(executeSQL, viewLoginTable, viewWorkTable, viewRoleTable, logout);
+        hbButtons.prefWidthProperty().bind(bottomPane.prefWidthProperty());
         hbButtons.setSpacing(10);
 
         Text successText = new Text();
 
         bottomPane.addRow(0, successText);
-        bottomPane.addRow(1, sqlInputs);
+        bottomPane.addRow(1, textAreaContainer);
         bottomPane.addRow(2, hbButtons);
         bottomPane.setHgap(10);
         bottomPane.setVgap(10);
         bottomPane.setPadding(new Insets(10, 10, 10, 10));
+
+        bottomPane.prefWidthProperty().bind(adminPane.widthProperty());
 
         adminPane.setBottom(bottomPane);
 
@@ -70,7 +93,7 @@ public class AdminViewScene {
         viewLoginTable.setOnAction(e -> adminPane.setCenter(returnLoginTable(conn)));
         viewRoleTable.setOnAction(e -> adminPane.setCenter(returnTable(conn)));
 
-        return new Scene(adminPane, 500,500);
+        return adminScene;
     }
 
     public void logout(Scene loginScene, Stage pStage) {
