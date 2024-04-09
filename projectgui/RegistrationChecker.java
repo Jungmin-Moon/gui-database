@@ -52,6 +52,7 @@ public class RegistrationChecker {
 
             if (rSet.next()) {
                 addToWorkInformation(userName, conn);
+                addToRoleTable(userName, conn);
                 return true;
             }
 
@@ -78,6 +79,28 @@ public class RegistrationChecker {
                 Statement tableInsert = conn.createStatement();
                 tableInsert.executeUpdate(insertStmt);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void addToRoleTable(String userName, Connection conn) {
+        try {
+            String query = "Select Employee_ID, firstname, lastName from login_information where userName = '" + userName + "';";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while(rs.next()) {
+                int empID = rs.getInt(1);
+                String firstName = rs.getString(2);
+                String lastName = rs.getString(3);
+
+                String insertQuery = "Insert into employee_roles (employee_id, first_name, last_Name) values ('" + empID + "', '" + firstName + "', '"
+                                + lastName + "');";
+                Statement insertStmt = conn.createStatement();
+                insertStmt.executeUpdate(insertQuery);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
