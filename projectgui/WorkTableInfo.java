@@ -49,32 +49,32 @@ public class WorkTableInfo {
         this.firstName.set(firstName);
     }
 
-    public Date getLicense() {
-        return userLicense.get();
+    public Property<Date> userLicenseProperty() {
+        return userLicense;
     }
 
     public void setLicense(Date license) {
         userLicense.set(license);
     }
 
-    public Date getCprAed() {
-        return userCPRAED.get();
+    public Property<Date> userCPRAEDProperty() {
+        return userCPRAED;
     }
 
     public void setCprAed(Date cprAed) {
         userCPRAED.set(cprAed);
     }
 
-    public String getEmail() {
-        return userEmail.get();
+    public Property<String> userEmailProperty() {
+        return userEmail;
     }
 
     public void setEmail(String email) {
         userEmail.set(email);
     }
 
-    public String getDepartment() {
-        return userDepartment.get();
+    public Property<String> userDepartmentProperty() {
+        return userDepartment;
     }
 
     public void setDepartment(String department) {

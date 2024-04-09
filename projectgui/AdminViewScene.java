@@ -92,6 +92,7 @@ public class AdminViewScene {
 
         viewLoginTable.setOnAction(e -> adminPane.setCenter(returnLoginTable(conn)));
         viewRoleTable.setOnAction(e -> adminPane.setCenter(returnTable(conn)));
+        viewWorkTable.setOnAction(e -> adminPane.setCenter(returnWorkTable(conn)));
 
         return adminScene;
     }
@@ -221,6 +222,55 @@ public class AdminViewScene {
         workTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         ObservableList<WorkTableInfo> workData = FXCollections.observableArrayList();
 
+        //Employee_ID, LastName, FirstName, License (date), CPR_AED (date), Employee_Email, department
+        try {
+            String query = "Select * from work_information;";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                WorkTableInfo wTableInfo = new WorkTableInfo(
+                  rs.getInt(1),
+                  rs.getString(2),
+                  rs.getString(3),
+                  rs.getDate(4),
+                  rs.getDate(5),
+                  rs.getString(6),
+                  rs.getString(7)
+                );
+
+                workData.add(wTableInfo);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        workTable.setItems(workData);
+
+        TableColumn idCol = new TableColumn("Employee ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("empID"));
+
+        TableColumn lastNameCol = new TableColumn("Last Name");
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+
+        TableColumn firstNameCol = new TableColumn("First Name");
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+
+        TableColumn licenseCol = new TableColumn("License");
+        licenseCol.setCellValueFactory(new PropertyValueFactory<>("userLicense"));
+
+        TableColumn cpraedCol = new TableColumn("CPR/AED");
+        cpraedCol.setCellValueFactory(new PropertyValueFactory<>("userCPRAED"));
+
+        TableColumn emailCol = new TableColumn("Email");
+        emailCol.setCellValueFactory(new PropertyValueFactory<>("userEmail"));
+
+        TableColumn departmentCol = new TableColumn("Department");
+        departmentCol.setCellValueFactory(new PropertyValueFactory<>("userDepartment"));
+
+        workTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        workTable.getColumns().addAll(idCol, lastNameCol, firstNameCol, licenseCol, cpraedCol, emailCol, departmentCol);
 
         return workTable;
     }
