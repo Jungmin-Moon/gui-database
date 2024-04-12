@@ -66,9 +66,9 @@ public class AdminViewScene {
         hbButtons.prefWidthProperty().bind(bottomPane.prefWidthProperty());
         hbButtons.setSpacing(10);
 
-        Text successText = new Text();
+        Text updateText = new Text();
 
-        bottomPane.addRow(0, successText);
+        bottomPane.addRow(0, updateText);
         bottomPane.addRow(1, textAreaContainer);
         bottomPane.addRow(2, hbButtons);
         bottomPane.setHgap(10);
@@ -82,17 +82,26 @@ public class AdminViewScene {
         logout.setOnAction(e -> logout(loginScene, pStage));
         executeSQL.setOnAction(e ->  {
             if (executeTextAreaSQL(sqlInputs.getText(), conn) > 0) {
-                successText.setText("Update successful.");
+                updateText.setText("Update successful.");
             } else {
-                successText.setText("Something went wrong with the SQL query.");
+                updateText.setText("Something went wrong with the SQL query.");
             }
             sqlInputs.setText("");
             adminPane.setCenter(returnTable(conn));
         });
 
-        viewLoginTable.setOnAction(e -> adminPane.setCenter(returnLoginTable(conn)));
-        viewRoleTable.setOnAction(e -> adminPane.setCenter(returnTable(conn)));
-        viewWorkTable.setOnAction(e -> adminPane.setCenter(returnWorkTable(conn)));
+        viewLoginTable.setOnAction(e -> {
+            adminPane.setCenter(returnLoginTable(conn));
+            updateText.setText("Viewing Table: login_information");
+        });
+        viewRoleTable.setOnAction(e -> {
+            adminPane.setCenter(returnTable(conn));
+            updateText.setText("Viewing Table: employee_roles");
+        });
+        viewWorkTable.setOnAction(e -> {
+            adminPane.setCenter(returnWorkTable(conn));
+            updateText.setText("Viewing Table: work_information");
+        });
 
         return adminScene;
     }
