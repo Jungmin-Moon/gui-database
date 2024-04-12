@@ -14,8 +14,6 @@ import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 import java.sql.*;
 
-//will be using border pane for the various scenes to organize them better
-
 public class Scene_Repository extends Application{
     LoginChecker loginCheck = new LoginChecker();
     RegistrationChecker registerCheck = new RegistrationChecker();
@@ -53,7 +51,6 @@ public class Scene_Repository extends Application{
         loginPane.addRow(4, loginButton, registerButton);
         loginPane.addRow(5, loginText);
         Scene loginScene = new Scene(loginPane, 400, 400);
-
 
         GridPane registerPane = new GridPane();
         registerPane.setAlignment(Pos.CENTER);
@@ -117,7 +114,7 @@ public class Scene_Repository extends Application{
             passAgainField.setText("");
             newUserName.setText("");
 
-            if (newUName.matches("\\badmin\\b")) {
+            if (newUName.matches("\\badmin\\b|\\badmln\\b|\\badmLn\\b|\\b@dmin\\b|\\badmIn\\b|\\b@dmIn\\b|\\b@dmln\\b|\\b@dmLn\\b")) {
                 status.setText("You can not use admin in yor username.");
             } else {
                 if (!registerCheck.checkUserExists(newUName, connection)) {

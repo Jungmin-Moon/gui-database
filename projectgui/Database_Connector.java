@@ -15,20 +15,10 @@ public class Database_Connector {
 
             Statement statement = connection.createStatement();
 
-            //connection.close();
         }
         catch (Exception exception) {
             System.out.println(exception);
-        } /*
-        finally {
-            if(connection != null)
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-        } */
-
+        }
         return connection;
     }
 

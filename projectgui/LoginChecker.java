@@ -1,8 +1,5 @@
 package projectgui;
 
-
-import javax.xml.transform.Result;
-//import java.sql.SQLException;
 import java.sql.*;
 
 public class LoginChecker {
@@ -22,7 +19,6 @@ public class LoginChecker {
             throw new RuntimeException(e);
         }
 
-
         return validInformation;
     }
 
@@ -41,17 +37,9 @@ public class LoginChecker {
                 results[1] = resultSet.getString(2);
                 results[2] = resultSet.getString(3);
             }
-            /*
-            for (String i : results) {
-                System.out.println(i);
-            } */
             return results;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        //System.out.println(results[0] + " " + results[1] + " " + results[2]);
-
-
     }
 }

@@ -19,7 +19,6 @@ import javafx.scene.shape.*;
 import javafx.util.Callback;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class AdminViewScene {
 

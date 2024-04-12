@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Employee_Info {
 
-
     protected String displaySingleEmployee(int employeeID, Connection conn) {
         String result = "";
 
@@ -33,8 +32,6 @@ public class Employee_Info {
                 email = set.getString(6);
                 department = set.getString(7);
             }
-
-
 
             result = "Employee ID: " + id + "\n" +
                     "First Name: " + firstName + "\n" +
@@ -69,7 +66,6 @@ public class Employee_Info {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
 
         return result;
     }
