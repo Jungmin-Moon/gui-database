@@ -117,23 +117,27 @@ public class Scene_Repository extends Application{
             passAgainField.setText("");
             newUserName.setText("");
 
-            if (!registerCheck.checkUserExists(newUName, connection)) {
-                if (pass1.equals(pass2)) {
-                    String newFName = newFirstField.getText();
-                    String newLName = newLastField.getText();
-                    newFirstField.setText("");
-                    newLastField.setText("");
-                    boolean registered = registerCheck.registerUser(newFName, newLName, pass1, newUName, connection);
-                    if (registered) {
-                        primaryStage.setScene(loginScene);
+            if (newUName.matches("\\badmin\\b")) {
+                status.setText("You can not use admin in yor username.");
+            } else {
+                if (!registerCheck.checkUserExists(newUName, connection)) {
+                    if (pass1.equals(pass2)) {
+                        String newFName = newFirstField.getText();
+                        String newLName = newLastField.getText();
+                        newFirstField.setText("");
+                        newLastField.setText("");
+                        boolean registered = registerCheck.registerUser(newFName, newLName, pass1, newUName, connection);
+                        if (registered) {
+                            primaryStage.setScene(loginScene);
+                        } else {
+                            status.setText("Something went wrong and you were not registered. Please try again.");
+                        }
                     } else {
-                        status.setText("Something went wrong and you were not registered. Please try again.");
+                        status.setText("Passwords do not match. Please enter them again.");
                     }
                 } else {
-                    status.setText("Passwords do not match. Please enter them again.");
+                    status.setText("Username already exists. Please use a different one.");
                 }
-            } else {
-                status.setText("Username already exists. Please use a different one.");
             }
         });
 
