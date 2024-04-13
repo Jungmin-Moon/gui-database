@@ -51,6 +51,8 @@ public class Scene_Repository extends Application{
         loginPane.addRow(4, loginButton, registerButton);
         loginPane.addRow(5, loginText);
         Scene loginScene = new Scene(loginPane, 400, 400);
+        loginScene.getStylesheets().add("/projectgui/styles.css");
+        loginPane.getStyleClass().add("pane");
 
         GridPane registerPane = new GridPane();
         registerPane.setAlignment(Pos.CENTER);
@@ -84,6 +86,7 @@ public class Scene_Repository extends Application{
         registerPane.addRow(5, registerUser, goBackLogin);
         registerPane.addRow(6, status);
         Scene registerScene = new Scene(registerPane, 400, 400);
+        registerScene.getStylesheets().add("styles.css");
 
         //event handling
         registerButton.setOnAction(e -> primaryStage.setScene(registerScene));
@@ -115,7 +118,7 @@ public class Scene_Repository extends Application{
             newUserName.setText("");
 
             if (newUName.matches("\\badmin\\b|\\badmln\\b|\\badmLn\\b|\\b@dmin\\b|\\badmIn\\b|\\b@dmIn\\b|\\b@dmln\\b|\\b@dmLn\\b")) {
-                status.setText("You can not use admin in yor username.");
+                status.setText("You can not use admin or any variant of admin in yor username.");
             } else {
                 if (!registerCheck.checkUserExists(newUName, connection)) {
                     if (pass1.equals(pass2)) {
