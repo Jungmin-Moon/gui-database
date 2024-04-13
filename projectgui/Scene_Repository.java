@@ -51,6 +51,7 @@ public class Scene_Repository extends Application{
         loginPane.addRow(4, loginButton, registerButton);
         loginPane.addRow(5, loginText);
         Scene loginScene = new Scene(loginPane, 400, 400);
+
         loginScene.getStylesheets().add("/projectgui/styles.css");
         loginPane.getStyleClass().add("pane");
 
@@ -86,7 +87,8 @@ public class Scene_Repository extends Application{
         registerPane.addRow(5, registerUser, goBackLogin);
         registerPane.addRow(6, status);
         Scene registerScene = new Scene(registerPane, 400, 400);
-        registerScene.getStylesheets().add("styles.css");
+        registerScene.getStylesheets().add("/projectgui/styles.css");
+        registerPane.getStyleClass().add("pane");
 
         //event handling
         registerButton.setOnAction(e -> primaryStage.setScene(registerScene));
@@ -173,6 +175,25 @@ public class Scene_Repository extends Application{
                 "Hello, " + user.getName());
         afterLogin.setTop(loggedIn);
         loggedIn.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+        /*
+        This post reserved for displaying text to the user if they have a license or certification that will expire
+        within 60 days, 30 days, or has expired.
+        <= 60, <= 30
+
+        //get the dates about the employee and store them
+        //get the current date today
+        //find the number of days between
+        depending on the day difference if it is >60 the text will just display Looking good
+        if the day difference is less than or equal to 60 but higher than 30 it will be Yellow Text saying X
+        is expiring in the number of days difference
+        same for the 30 day warning but it will be in Orange text.
+        Same day will be Red
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate todayDate = LocalDate.now();
+        long diffInDays = ChronoUnit.DAYS.between(x , y);
+         */
 
         TextArea currentInfo = new TextArea();
         String result = empInfo.displaySingleEmployee(user.getEmpID(), connection);
