@@ -173,10 +173,12 @@ public class Scene_Repository extends Application{
     private Scene afterLoginScene(Stage pStage) {
         BorderPane afterLogin = new BorderPane();
         Scene afterLoginScene = new Scene(afterLogin, 600, 600);
+
+        GridPane topPane = new GridPane();
         Text loggedIn = new Text();
         loggedIn.setText("Employee ID: " + user.getEmpID() + "\n" +
                 "Hello, " + user.getName());
-        afterLogin.setTop(loggedIn);
+        afterLogin.setTop(topPane);
         loggedIn.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
         /*
@@ -190,8 +192,6 @@ public class Scene_Repository extends Application{
         is expiring in the number of days difference
         same for the 30 day warning but it will be in Orange text.
         Same day will be Red
-
-        long diffInDays = ChronoUnit.DAYS.between(x , y);
          */
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -203,6 +203,13 @@ public class Scene_Repository extends Application{
 
         long daysLicenseExpire = ChronoUnit.DAYS.between(todayDate, currentLicense);
         long daysCertExpire = ChronoUnit.DAYS.between(todayDate, currentCprAed);
+
+        licenseStatus.setText("Days till expire: " + daysLicenseExpire);
+        cpraedStatus.setText("Days till expire: " + daysCertExpire);
+
+        topPane.addRow(0, loggedIn);
+        topPane.addRow(2, licenseStatus);
+        topPane.addRow(3, cpraedStatus);
 
         TextArea currentInfo = new TextArea();
         String result = empInfo.displaySingleEmployee(user.getEmpID(), connection);
