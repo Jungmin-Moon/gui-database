@@ -13,6 +13,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class Scene_Repository extends Application{
     LoginChecker loginCheck = new LoginChecker();
@@ -181,8 +184,6 @@ public class Scene_Repository extends Application{
         within 60 days, 30 days, or has expired.
         <= 60, <= 30
 
-        //get the dates about the employee and store them
-        //get the current date today
         //find the number of days between
         depending on the day difference if it is >60 the text will just display Looking good
         if the day difference is less than or equal to 60 but higher than 30 it will be Yellow Text saying X
@@ -190,10 +191,18 @@ public class Scene_Repository extends Application{
         same for the 30 day warning but it will be in Orange text.
         Same day will be Red
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate todayDate = LocalDate.now();
         long diffInDays = ChronoUnit.DAYS.between(x , y);
          */
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate todayDate = LocalDate.now();
+        Text licenseStatus = new Text();
+        Text cpraedStatus = new Text();
+        LocalDate currentLicense = empInfo.getLicenseDate(user.getEmpID(), connection);
+        LocalDate currentCprAed = empInfo.getCertificateDate(user.getEmpID(), connection);
+
+        long daysLicenseExpire = ChronoUnit.DAYS.between(todayDate, currentLicense);
+        long daysCertExpire = ChronoUnit.DAYS.between(todayDate, currentCprAed);
 
         TextArea currentInfo = new TextArea();
         String result = empInfo.displaySingleEmployee(user.getEmpID(), connection);
