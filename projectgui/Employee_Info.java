@@ -213,4 +213,40 @@ public class Employee_Info {
             throw new RuntimeException(e);
         }
     }
+
+    protected LocalDate getLicenseDate(int userID, Connection conn) {
+        LocalDate license = LocalDate.now();
+        try {
+            String query = "Select license from work_information where employee_id = '" + userID + "';";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while(rs.next()) {
+                license = LocalDate.parse(String.valueOf(rs.getDate(1)));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return license;
+    }
+
+    protected LocalDate getCertificateDate(int userId, Connection conn) {
+        LocalDate certificate = LocalDate.now();
+        try {
+            String query = "Select CPR_AED from work_information where employee_id = '" + userId + "';";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while(rs.next()) {
+                certificate = LocalDate.parse(String.valueOf(rs.getDate(1)));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return certificate;
+    }
 }
