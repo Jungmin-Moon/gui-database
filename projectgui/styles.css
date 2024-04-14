@@ -11,3 +11,25 @@
     -fx-font-weight: Bold;
     -fx-font-family: Arial;
 }
+
+.loggedInText {
+    -fx-font-weight: Bold;
+    -fx-font-family: Arial;
+    -fx-font-size: 20;
+}
+
+.greaterThanSixtyDays {
+
+}
+
+.withinSixtyDays {
+
+}
+
+.withinThirtyDays {
+
+}
+
+.expired {
+
+}

@@ -179,7 +179,7 @@ public class Scene_Repository extends Application{
         loggedIn.setText("Employee ID: " + user.getEmpID() + "\n" +
                 "Hello, " + user.getName());
         afterLogin.setTop(topPane);
-        loggedIn.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        loggedIn.getStyleClass().add("loggedInText");
 
         /*
         This post reserved for displaying text to the user if they have a license or certification that will expire
@@ -204,7 +204,22 @@ public class Scene_Repository extends Application{
         long daysLicenseExpire = ChronoUnit.DAYS.between(todayDate, currentLicense);
         long daysCertExpire = ChronoUnit.DAYS.between(todayDate, currentCprAed);
 
-        licenseStatus.setText("Days till expire: " + daysLicenseExpire);
+        //all should be bold and large in size.
+        if (daysLicenseExpire >= 61) {
+            licenseStatus.getStyleClass().add("greaterThanSixtyDays");
+            licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //no color
+        } else if (daysLicenseExpire <= 60 && daysLicenseExpire >= 31) {
+            licenseStatus.getStyleClass().add("withinSixtyDays");
+            licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //Yellow text
+        } else if (daysLicenseExpire <= 30 && daysLicenseExpire >= 1) {
+            licenseStatus.getStyleClass().add("withinThirtyDays");
+            licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //orange text
+        } else {
+            licenseStatus.getStyleClass().add("expired");
+            licenseStatus.setText("Days till License expires: " + daysLicenseExpire); // red text
+        }
+
+        //licenseStatus.setText("Days till expire: " + daysLicenseExpire);
         cpraedStatus.setText("Days till expire: " + daysCertExpire);
 
         topPane.addRow(0, loggedIn);
@@ -234,6 +249,8 @@ public class Scene_Repository extends Application{
         afterLogin.setBottom(vBox);
 
         updateButton.setOnAction(e -> pStage.setScene(updateScene(pStage)));
+
+        afterLoginScene.getStylesheets().add("/projectgui/styles.css");
 
         return afterLoginScene;
     }
