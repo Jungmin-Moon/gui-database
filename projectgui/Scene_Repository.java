@@ -106,7 +106,11 @@ public class Scene_Repository extends Application{
                     primaryStage.setScene(adminView.adminView(connection, loginScene, primaryStage));
                 } else {
                     setTokens(persistCheck);
-                    primaryStage.setScene(afterLoginScene(primaryStage));
+                    try {
+                        primaryStage.setScene(afterLoginScene(primaryStage));
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
 
             } else {
@@ -170,7 +174,7 @@ public class Scene_Repository extends Application{
         return isValid;
     }
 
-    private Scene afterLoginScene(Stage pStage) {
+    private Scene afterLoginScene(Stage pStage) throws SQLException {
         BorderPane afterLogin = new BorderPane();
         Scene afterLoginScene = new Scene(afterLogin, 600, 600);
 
@@ -185,10 +189,12 @@ public class Scene_Repository extends Application{
         LocalDate todayDate = LocalDate.now();
         Text licenseStatus = new Text();
         Text cpraedStatus = new Text();
-        LocalDate currentLicense = empInfo.getLicenseDate(user.getEmpID(), connection);
-        LocalDate currentCprAed = empInfo.getCertificateDate(user.getEmpID(), connection);
 
-        if (currentLicense != null) {
+        ResultSet licenseResult = empInfo.getLicenseDate(user.getEmpID(), connection);
+        licenseResult.next();
+        if (licenseResult.getDate(1) != null) {
+            LocalDate currentLicense = LocalDate.parse(String.valueOf(licenseResult.getDate(1)));
+
             long daysLicenseExpire = ChronoUnit.DAYS.between(todayDate, currentLicense);
 
             if (daysLicenseExpire >= 61) {
@@ -211,28 +217,34 @@ public class Scene_Repository extends Application{
         } else {
             licenseStatus.setText("No information about license set.");
         }
-        long daysCertExpire = ChronoUnit.DAYS.between(todayDate, currentCprAed);
 
-        /*
-        if (daysLicenseExpire >= 61) {
-            licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20;");
-            licenseStatus.setFill(Color.BLACK);
-            licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //no color
-        } else if (daysLicenseExpire <= 60 && daysLicenseExpire >= 31) {
-            licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20;");
-            licenseStatus.setFill(Color.GOLD);
-            licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //Yellow text
-        } else if (daysLicenseExpire <= 30 && daysLicenseExpire >= 1) {
-            licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20;");
-            licenseStatus.setFill(Color.ORANGERED);
-            licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //orange text
+        ResultSet certResult = empInfo.getCertificateDate(user.getEmpID(), connection);
+        certResult.next();
+        if (certResult.getDate(1) != null) {
+            LocalDate currentCprAed = LocalDate.parse(String.valueOf(certResult.getDate(1)));
+
+            long daysCertExpire = ChronoUnit.DAYS.between(todayDate, currentCprAed);
+
+            if (daysCertExpire >= 61) {
+                cpraedStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
+                cpraedStatus.setFill(Color.BLACK);
+                cpraedStatus.setText("Days till Certificate expires: " + daysCertExpire); //no color
+            } else if (daysCertExpire <= 60 && daysCertExpire >= 31) {
+                cpraedStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
+                cpraedStatus.setFill(Color.GOLD);
+                cpraedStatus.setText("Days till Certificate expires: " + daysCertExpire); //Yellow text
+            } else if (daysCertExpire <= 30 && daysCertExpire >= 1) {
+                cpraedStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
+                cpraedStatus.setFill(Color.ORANGERED);
+                cpraedStatus.setText("Days till Certificate expires: " + daysCertExpire); //orange text
+            } else {
+                cpraedStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
+                cpraedStatus.setFill(Color.RED);
+                cpraedStatus.setText("Days till Certificate expires: " + daysCertExpire); // red text
+            }
         } else {
-            licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20;");
-            licenseStatus.setFill(Color.RED);
-            licenseStatus.setText("Days till License expires: " + daysLicenseExpire); // red text
-        } */
-
-        cpraedStatus.setText("Days till expire: " + daysCertExpire);
+            cpraedStatus.setText("No information about certificates set.");
+        }
 
         topPane.addRow(0, loggedIn);
         topPane.addRow(2, licenseStatus);
@@ -370,10 +382,20 @@ public class Scene_Repository extends Application{
             String[] updatedInformation = {changeLastName.getText(), changeFirstName.getText(), changeEmail.getText(),
                     licenseCheck, cpraedCheck, changeDepartment.getText()};
             empInfo.updateEmployee(user.getEmpID(), updatedInformation, connection);
-            pStage.setScene((afterLoginScene(pStage)));
+            try {
+                pStage.setScene((afterLoginScene(pStage)));
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
-        backOne.setOnAction(e -> pStage.setScene(afterLoginScene(pStage)));
+        backOne.setOnAction(e -> {
+            try {
+                pStage.setScene(afterLoginScene(pStage));
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         return new Scene(updatePane, 600, 600);
     }

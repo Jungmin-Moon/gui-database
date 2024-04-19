@@ -214,39 +214,31 @@ public class Employee_Info {
         }
     }
 
-    protected LocalDate getLicenseDate(int userID, Connection conn) {
-        LocalDate license = LocalDate.now();
+    protected ResultSet getLicenseDate(int userID, Connection conn) {
+        ResultSet rs;
         try {
             String query = "Select license from work_information where employee_id = '" + userID + "';";
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()) {
-                license = LocalDate.parse(String.valueOf(rs.getDate(1)));
-            }
+            rs = stmt.executeQuery(query);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return license;
+        return rs;
     }
 
-    protected LocalDate getCertificateDate(int userId, Connection conn) {
-        LocalDate certificate = LocalDate.now();
+    protected ResultSet getCertificateDate(int userId, Connection conn) {
+        ResultSet rs;
         try {
             String query = "Select CPR_AED from work_information where employee_id = '" + userId + "';";
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()) {
-                certificate = LocalDate.parse(String.valueOf(rs.getDate(1)));
-            }
+            rs = stmt.executeQuery(query);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return certificate;
+        return rs;
     }
 }
