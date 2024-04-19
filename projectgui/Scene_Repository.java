@@ -204,18 +204,21 @@ public class Scene_Repository extends Application{
         long daysLicenseExpire = ChronoUnit.DAYS.between(todayDate, currentLicense);
         long daysCertExpire = ChronoUnit.DAYS.between(todayDate, currentCprAed);
 
-        //all should be bold and large in size.
         if (daysLicenseExpire >= 61) {
-            licenseStatus.getStyleClass().add("greaterThanSixtyDays");
+            licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20;");
+            licenseStatus.setFill(Color.BLACK);
             licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //no color
         } else if (daysLicenseExpire <= 60 && daysLicenseExpire >= 31) {
-            licenseStatus.getStyleClass().add("withinSixtyDays");
+            licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20;");
+            licenseStatus.setFill(Color.GOLD);
             licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //Yellow text
         } else if (daysLicenseExpire <= 30 && daysLicenseExpire >= 1) {
-            licenseStatus.getStyleClass().add("withinThirtyDays");
+            licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20;");
+            licenseStatus.setFill(Color.ORANGERED);
             licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //orange text
         } else {
-            licenseStatus.getStyleClass().add("expired");
+            licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20;");
+            licenseStatus.setFill(Color.RED);
             licenseStatus.setText("Days till License expires: " + daysLicenseExpire); // red text
         }
 
