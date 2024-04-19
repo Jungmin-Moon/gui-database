@@ -56,7 +56,7 @@ public class Scene_Repository extends Application{
         Scene loginScene = new Scene(loginPane, 400, 400);
 
         loginScene.getStylesheets().add("/projectgui/styles.css");
-        loginPane.getStyleClass().add("pane");
+        loginPane.getStyleClass().add("loginPane");
 
         GridPane registerPane = new GridPane();
         registerPane.setAlignment(Pos.CENTER);
@@ -91,7 +91,7 @@ public class Scene_Repository extends Application{
         registerPane.addRow(6, status);
         Scene registerScene = new Scene(registerPane, 400, 400);
         registerScene.getStylesheets().add("/projectgui/styles.css");
-        registerPane.getStyleClass().add("pane");
+        registerPane.getStyleClass().add("registerPane");
 
         //event handling
         registerButton.setOnAction(e -> primaryStage.setScene(registerScene));
