@@ -181,19 +181,6 @@ public class Scene_Repository extends Application{
         afterLogin.setTop(topPane);
         loggedIn.getStyleClass().add("loggedInText");
 
-        /*
-        This post reserved for displaying text to the user if they have a license or certification that will expire
-        within 60 days, 30 days, or has expired.
-        <= 60, <= 30
-
-        //find the number of days between
-        depending on the day difference if it is >60 the text will just display Looking good
-        if the day difference is less than or equal to 60 but higher than 30 it will be Yellow Text saying X
-        is expiring in the number of days difference
-        same for the 30 day warning but it will be in Orange text.
-        Same day will be Red
-         */
-
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate todayDate = LocalDate.now();
         Text licenseStatus = new Text();
@@ -201,9 +188,32 @@ public class Scene_Repository extends Application{
         LocalDate currentLicense = empInfo.getLicenseDate(user.getEmpID(), connection);
         LocalDate currentCprAed = empInfo.getCertificateDate(user.getEmpID(), connection);
 
-        long daysLicenseExpire = ChronoUnit.DAYS.between(todayDate, currentLicense);
+        if (currentLicense != null) {
+            long daysLicenseExpire = ChronoUnit.DAYS.between(todayDate, currentLicense);
+
+            if (daysLicenseExpire >= 61) {
+                licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
+                licenseStatus.setFill(Color.BLACK);
+                licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //no color
+            } else if (daysLicenseExpire <= 60 && daysLicenseExpire >= 31) {
+                licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
+                licenseStatus.setFill(Color.GOLD);
+                licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //Yellow text
+            } else if (daysLicenseExpire <= 30 && daysLicenseExpire >= 1) {
+                licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
+                licenseStatus.setFill(Color.ORANGERED);
+                licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //orange text
+            } else {
+                licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
+                licenseStatus.setFill(Color.RED);
+                licenseStatus.setText("Days till License expires: " + daysLicenseExpire); // red text
+            }
+        } else {
+            licenseStatus.setText("No information about license set.");
+        }
         long daysCertExpire = ChronoUnit.DAYS.between(todayDate, currentCprAed);
 
+        /*
         if (daysLicenseExpire >= 61) {
             licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20;");
             licenseStatus.setFill(Color.BLACK);
@@ -220,9 +230,8 @@ public class Scene_Repository extends Application{
             licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20;");
             licenseStatus.setFill(Color.RED);
             licenseStatus.setText("Days till License expires: " + daysLicenseExpire); // red text
-        }
+        } */
 
-        //licenseStatus.setText("Days till expire: " + daysLicenseExpire);
         cpraedStatus.setText("Days till expire: " + daysCertExpire);
 
         topPane.addRow(0, loggedIn);
@@ -341,7 +350,6 @@ public class Scene_Repository extends Application{
         the "token" that is always in the top left of the window.
          */
 
-        //need to update and put a null checker then add the converted version to the array
         updateInfo.setOnAction(e ->  {
 
             String licenseCheck = "";
