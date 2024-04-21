@@ -1,5 +1,5 @@
 .loginPane {
-    -fx-background-color: DeepSkyBlue;
+    -fx-background-color: darkgrey;
 }
 
 .label {
@@ -19,5 +19,44 @@
 }
 
 .registerPane {
-    -fx-background-color: DeepSkyBlue;
+    -fx-background-color: darkgrey;
 }
+
+.adminPane {
+    -fx-font-family: Arial;
+    -fx-font-size: 12;
+    -fx-background-color: darkgrey;
+}
+
+.adminButton {
+    -fx-font-family: Arial;
+    -fx-font-size: 12;
+    -fx-font-weight: Bold;
+}
+
+.adminSceneText {
+    -fx-font-family: Arial;
+    -fx-font-size: 16;
+    -fx-font-weight: Bold;
+}
+
+.table-view .table-cell{
+    -fx-background-color: darkgrey;
+    -fx-font-family: Arial;
+    -fx-font-size: 14;
+    -fx-font-weight: Bold;
+}
+
+.afterLoginPane {
+    -fx-background-color: darkgrey;
+
+}
+
+.afterLoginTextArea {
+    -fx-control-inner-background: darkgrey;
+    -fx-font-family: Arial;
+    -fx-font-weight: Bold;
+    -fx-font-size: 20;
+    -fx-font-color: Black;
+}
+
