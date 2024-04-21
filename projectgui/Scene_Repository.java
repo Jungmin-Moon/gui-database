@@ -169,8 +169,7 @@ public class Scene_Repository extends Application{
 
 
     private boolean validateInformation(String userName, String userPassword, Connection connection) {
-        boolean isValid = loginCheck.checkLoginInformation(userName, userPassword, connection);
-        return isValid;
+        return loginCheck.checkLoginInformation(userName, userPassword, connection);
     }
 
     private Scene afterLoginScene(Stage pStage) throws SQLException {
@@ -184,7 +183,6 @@ public class Scene_Repository extends Application{
         afterLogin.setTop(topPane);
         loggedIn.getStyleClass().add("loggedInText");
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate todayDate = LocalDate.now();
         Text licenseStatus = new Text();
         Text cpraedStatus = new Text();
