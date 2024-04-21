@@ -29,6 +29,7 @@ public class AdminViewScene {
 
         Text welcomeAdmin = new Text();
         welcomeAdmin.setText("Hello, Admin");
+        welcomeAdmin.getStyleClass().add("adminSceneText");
         adminPane.setTop(welcomeAdmin);
 
         adminPane.setCenter(returnTable(conn));
@@ -102,6 +103,15 @@ public class AdminViewScene {
             updateText.setText("Viewing Table: work_information");
         });
 
+        adminScene.getStylesheets().add("/projectgui/styles.css");
+        adminPane.getStyleClass().add("adminPane");
+        executeSQL.getStyleClass().add("adminButton");
+        logout.getStyleClass().add("adminButton");
+        viewLoginTable.getStyleClass().add("adminButton");
+        viewWorkTable.getStyleClass().add("adminButton");
+        viewRoleTable.getStyleClass().add("adminButton");
+        updateText.getStyleClass().add("adminSceneText");
+
         return adminScene;
     }
 
@@ -112,11 +122,15 @@ public class AdminViewScene {
     public int executeTextAreaSQL(String text, Connection conn) {
         int successOrFail = 0;
 
-        try {
-            Statement stmt = conn.createStatement();
-            successOrFail = stmt.executeUpdate(text);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (text.isEmpty()) {
+            successOrFail = 0;
+        } else {
+            try {
+                Statement stmt = conn.createStatement();
+                successOrFail = stmt.executeUpdate(text);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         return successOrFail;
