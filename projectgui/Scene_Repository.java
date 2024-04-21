@@ -274,6 +274,7 @@ public class Scene_Repository extends Application{
         afterLoginScene.getStylesheets().add("/projectgui/styles.css");
         afterLogin.getStyleClass().add("afterLoginPane");
         currentInfo.getStyleClass().add("afterLoginTextArea");
+        updateButton.getStyleClass().add("afterLoginUpdateButton");
 
         return afterLoginScene;
     }

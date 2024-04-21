@@ -49,7 +49,6 @@
 
 .afterLoginPane {
     -fx-background-color: darkgrey;
-
 }
 
 .afterLoginTextArea {
@@ -58,5 +57,11 @@
     -fx-font-weight: Bold;
     -fx-font-size: 20;
     -fx-font-color: Black;
+}
+
+.afterLoginUpdateButton {
+    -fx-font-family: Arial;
+    -fx-font-weight: Bold;
+    -fx-font-size: 12;
 }
 
