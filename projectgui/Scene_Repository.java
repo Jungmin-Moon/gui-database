@@ -200,16 +200,16 @@ public class Scene_Repository extends Application{
                 licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //no color
             } else if (daysLicenseExpire <= 60 && daysLicenseExpire >= 31) {
                 licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
-                licenseStatus.setFill(Color.GOLD);
+                licenseStatus.setFill(Color.YELLOW);
                 licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //Yellow text
             } else if (daysLicenseExpire <= 30 && daysLicenseExpire >= 1) {
                 licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
-                licenseStatus.setFill(Color.ORANGERED);
+                licenseStatus.setFill(Color.ORANGE);
                 licenseStatus.setText("Days till License expires: " + daysLicenseExpire); //orange text
             } else {
                 licenseStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
                 licenseStatus.setFill(Color.RED);
-                licenseStatus.setText("Days till License expires: " + daysLicenseExpire); // red text
+                licenseStatus.setText("Days till License expires: EXPIRED"); // red text
             }
         } else {
             licenseStatus.setText("No information about license set.");
@@ -228,16 +228,16 @@ public class Scene_Repository extends Application{
                 cpraedStatus.setText("Days till Certificate expires: " + daysCertExpire); //no color
             } else if (daysCertExpire <= 60 && daysCertExpire >= 31) {
                 cpraedStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
-                cpraedStatus.setFill(Color.GOLD);
+                cpraedStatus.setFill(Color.YELLOW);
                 cpraedStatus.setText("Days till Certificate expires: " + daysCertExpire); //Yellow text
             } else if (daysCertExpire <= 30 && daysCertExpire >= 1) {
                 cpraedStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
-                cpraedStatus.setFill(Color.ORANGERED);
+                cpraedStatus.setFill(Color.ORANGE);
                 cpraedStatus.setText("Days till Certificate expires: " + daysCertExpire); //orange text
             } else {
                 cpraedStatus.setStyle("-fx-font-family: Arial; -fx-font-size: 20; -fx-font-weight: Bold");
                 cpraedStatus.setFill(Color.RED);
-                cpraedStatus.setText("Days till Certificate expires: " + daysCertExpire); // red text
+                cpraedStatus.setText("Days till Certificate expires: EXPIRED"); // red text
             }
         } else {
             cpraedStatus.setText("No information about certificates set.");
