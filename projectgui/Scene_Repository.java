@@ -293,6 +293,8 @@ public class Scene_Repository extends Application{
     private Scene updateScene(Stage pStage) {
         BorderPane updatePane = new BorderPane();
 
+        Scene updateSceneView = new Scene(updatePane, 600,600);
+
         Text token = new Text();
         token.setText("Employee ID: " + user.getEmpID() + "\n" +
                 "Hello, " + user.getName());
@@ -397,7 +399,9 @@ public class Scene_Repository extends Application{
             }
         });
 
-        return new Scene(updatePane, 600, 600);
+
+
+        return updateSceneView;
     }
 
 }
