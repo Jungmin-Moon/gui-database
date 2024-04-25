@@ -399,7 +399,7 @@ public class Scene_Repository extends Application{
             }
         });
 
-
+        updateSceneView.getStylesheets().add("/projectgui/styles.css");
 
         return updateSceneView;
     }
