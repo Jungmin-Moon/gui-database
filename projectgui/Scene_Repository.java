@@ -400,6 +400,18 @@ public class Scene_Repository extends Application{
         });
 
         updateSceneView.getStylesheets().add("/projectgui/styles.css");
+        //for all panes
+        updatePane.getStyleClass().add("updateScenePane");
+        //button
+        updateButtons.getStyleClass().add("updateSceneButton");
+        //labels
+        lastName.getStyleClass().add("updateSceneLabel");
+        firstName.getStyleClass().add("updateSceneLabel");
+        empEmail.getStyleClass().add("updateSceneLabel");
+        license.getStyleClass().add("updateSceneLabel");
+        cprAED.getStyleClass().add("updateSceneLabel");
+        empDepartment.getStyleClass().add("updateSceneLabel");
+
 
         return updateSceneView;
     }

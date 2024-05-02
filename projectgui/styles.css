@@ -66,13 +66,24 @@
 }
 
 .updateSceneText {
-
+    -fx-font-family: Arial;
+    -fx-font-size: 13;
 }
 
 .updateSceneButton {
-
+    -fx-font-size: 13;
+    -fx-font-weight: Bold;
 }
 
 .updateScenePane {
+    -fx-font-family: Arial;
+    -fx-background-color: darkgrey;
+    -fx-font-size: 14;
+
+}
+
+.updateSceneLabel {
+    -fx-font-family: Arial;
+    -fx-font-size: 13;
 
 }
